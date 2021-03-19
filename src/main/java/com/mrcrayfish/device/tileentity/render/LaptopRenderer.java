@@ -1,9 +1,9 @@
 package com.mrcrayfish.device.tileentity.render;
 
-import com.mrcrayfish.device.block.BlockLaptop;
+import com.mrcrayfish.device.block.LaptopBlock;
 import com.mrcrayfish.device.init.DeviceBlocks;
 import com.mrcrayfish.device.init.DeviceItems;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -18,16 +18,16 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 
-public class LaptopRenderer extends TileEntitySpecialRenderer<TileEntityLaptop>
+public class LaptopRenderer extends TileEntitySpecialRenderer<LaptopTileEntity>
 {
 	private Minecraft mc = Minecraft.getMinecraft();
 
 	private EntityItem entityItem = new EntityItem(Minecraft.getMinecraft().world, 0D, 0D, 0D);
 
 	@Override
-	public void render(TileEntityLaptop te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+	public void render(LaptopTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
 	{
-		IBlockState state = DeviceBlocks.LAPTOP.getDefaultState().withProperty(BlockLaptop.TYPE, BlockLaptop.Type.SCREEN);
+		IBlockState state = DeviceBlocks.LAPTOP.getDefaultState().withProperty(LaptopBlock.TYPE, LaptopBlock.Type.SCREEN);
 		BlockPos pos = te.getPos();
 		
 		bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);

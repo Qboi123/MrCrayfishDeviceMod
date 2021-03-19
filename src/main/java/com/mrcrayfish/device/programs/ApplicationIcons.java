@@ -4,13 +4,13 @@ import com.mrcrayfish.device.api.app.*;
 import com.mrcrayfish.device.api.app.component.Button;
 import com.mrcrayfish.device.api.app.component.ComboBox;
 import com.mrcrayfish.device.programs.system.layout.StandardLayout;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.TextFormatting;
 
 import javax.annotation.Nullable;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ApplicationIcons extends Application
 {
@@ -27,7 +27,7 @@ public class ApplicationIcons extends Application
     }
 
     @Override
-    public void init(@Nullable NBTTagCompound intent)
+    public void init(@Nullable CompoundNBT intent)
     {
         layoutMain = new StandardLayout(TextFormatting.BOLD + "Icons", 330, 153, this, null);
         layoutMain.setIcon(Icons.HOME);
@@ -80,12 +80,12 @@ public class ApplicationIcons extends Application
         IconSet set = iconSetComboBox.getSelectedItem();
         for(int i = 0; i < 126 && i < set.getIcons().length - (offset * 126); i++)
         {
-            Enum<? extends IIcon> anEnum = set.getIcons()[i + (offset * 126)];
-            IIcon icon = (IIcon) anEnum;
+            <? extends IIcon> an = set.getIcons()[i + (offset * 126)];
+            IIcon icon = (IIcon) an;
             int posX = (i % 18) * 18 - 1;
             int posY = (i / 18) * 18 + 20;
             Button button = new Button(5 + posX, 5 + posY, icon);
-            button.setToolTip("Icon", anEnum.name());
+            button.setToolTip("Icon", an.name());
             layoutContainer.addComponent(button);
         }
         layoutContainer.updateComponents(layoutContainer.xPosition, layoutContainer.yPosition);
@@ -102,13 +102,13 @@ public class ApplicationIcons extends Application
     }
 
     @Override
-    public void load(NBTTagCompound tagCompound)
+    public void load(CompoundNBT tagCompound)
     {
 
     }
 
     @Override
-    public void save(NBTTagCompound tagCompound)
+    public void save(CompoundNBT tagCompound)
     {
 
     }
@@ -116,9 +116,9 @@ public class ApplicationIcons extends Application
     public static class IconSet
     {
         private String name;
-        private Enum<? extends IIcon>[] icons;
+        private <? extends IIcon>[] icons;
 
-        public IconSet(String name, Enum<? extends IIcon>[] icons)
+        public IconSet(String name, <? extends IIcon>[] icons)
         {
             this.name = name;
             this.icons = icons;
@@ -129,7 +129,7 @@ public class ApplicationIcons extends Application
             return name;
         }
 
-        public Enum<? extends IIcon>[] getIcons()
+        public <? extends IIcon>[] getIcons()
         {
             return icons;
         }

@@ -1,13 +1,13 @@
 package com.mrcrayfish.device.core.io.drive;
 
 import com.mrcrayfish.device.core.io.ServerFolder;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public final class InternalDrive extends AbstractDrive
 {
@@ -17,24 +17,24 @@ public final class InternalDrive extends AbstractDrive
     }
 
     @Nullable
-    public static AbstractDrive fromTag(NBTTagCompound driveTag)
+    public static AbstractDrive fromTag(CompoundNBT driveTag)
     {
         AbstractDrive drive = new InternalDrive(driveTag.getString("name"));
         if(driveTag.hasKey("root", Constants.NBT.TAG_COMPOUND))
         {
-            NBTTagCompound folderTag = driveTag.getCompoundTag("root");
+            CompoundNBT folderTag = driveTag.getCompoundTag("root");
             drive.root = ServerFolder.fromTag(folderTag.getString("file_name"), folderTag.getCompoundTag("data"));
         }
         return drive;
     }
 
     @Override
-    public NBTTagCompound toTag()
+    public CompoundNBT toTag()
     {
-        NBTTagCompound driveTag = new NBTTagCompound();
+        CompoundNBT driveTag = new CompoundNBT();
         driveTag.setString("name", name);
 
-        NBTTagCompound folderTag = new NBTTagCompound();
+        CompoundNBT folderTag = new CompoundNBT();
         folderTag.setString("file_name", root.getName());
         folderTag.setTag("data", root.toTag());
         driveTag.setTag("root", folderTag);

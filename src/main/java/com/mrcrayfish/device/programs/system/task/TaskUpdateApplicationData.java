@@ -1,9 +1,9 @@
 package com.mrcrayfish.device.programs.system.task;
 
 import com.mrcrayfish.device.api.task.Task;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -14,14 +14,14 @@ public class TaskUpdateApplicationData extends Task
 {
     private int x, y, z;
     private String appId;
-    private NBTTagCompound data;
+    private CompoundNBT data;
 
     public TaskUpdateApplicationData()
     {
         super("update_application_data");
     }
 
-    public TaskUpdateApplicationData(int x, int y, int z, @Nonnull String appId, @Nonnull NBTTagCompound data)
+    public TaskUpdateApplicationData(int x, int y, int z, @Nonnull String appId, @Nonnull CompoundNBT data)
     {
         this();
         this.x = x;
@@ -32,7 +32,7 @@ public class TaskUpdateApplicationData extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound tag)
+    public void prepareRequest(CompoundNBT tag)
     {
         tag.setInteger("posX", this.x);
         tag.setInteger("posY", this.y);
@@ -42,25 +42,25 @@ public class TaskUpdateApplicationData extends Task
     }
 
     @Override
-    public void processRequest(NBTTagCompound tag, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT tag, World world, EntityPlayer player)
     {
         TileEntity tileEntity = world.getTileEntity(new BlockPos(tag.getInteger("posX"), tag.getInteger("posY"), tag.getInteger("posZ")));
-        if(tileEntity instanceof TileEntityLaptop)
+        if(tileEntity instanceof LaptopTileEntity)
         {
-            TileEntityLaptop laptop = (TileEntityLaptop) tileEntity;
+            LaptopTileEntity laptop = (LaptopTileEntity) tileEntity;
             laptop.setApplicationData(tag.getString("appId"), tag.getCompoundTag("appData"));
         }
         this.setSuccessful();
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound tag)
+    public void prepareResponse(CompoundNBT tag)
     {
 
     }
 
     @Override
-    public void processResponse(NBTTagCompound tag)
+    public void processResponse(CompoundNBT tag)
     {
 
     }

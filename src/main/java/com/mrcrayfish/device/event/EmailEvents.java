@@ -2,7 +2,7 @@ package com.mrcrayfish.device.event;
 
 import com.mrcrayfish.device.programs.email.EmailManager;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,7 +25,7 @@ public class EmailEvents
 					return;
 				}
 				
-				NBTTagCompound nbt = CompressedStreamTools.read(data);
+				CompoundNBT nbt = CompressedStreamTools.read(data);
 				if(nbt != null)
 				{
 					EmailManager.INSTANCE.readFromNBT(nbt);
@@ -51,7 +51,7 @@ public class EmailEvents
 					data.createNewFile();
 				}
 				
-				NBTTagCompound nbt = new NBTTagCompound();
+				CompoundNBT nbt = new CompoundNBT();
 				EmailManager.INSTANCE.writeToNBT(nbt);
 				CompressedStreamTools.write(nbt, data);
 			} 

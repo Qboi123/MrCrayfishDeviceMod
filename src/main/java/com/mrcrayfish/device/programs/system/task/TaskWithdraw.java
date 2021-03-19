@@ -7,11 +7,11 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskWithdraw extends Task
 {
@@ -29,13 +29,13 @@ public class TaskWithdraw extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setInteger("amount", this.amount);
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         int amount = nbt.getInteger("amount");
         Account account = BankUtil.INSTANCE.getAccount(player);
@@ -59,11 +59,11 @@ public class TaskWithdraw extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
         nbt.setInteger("balance", this.amount);
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt) {}
+    public void processResponse(CompoundNBT nbt) {}
 }

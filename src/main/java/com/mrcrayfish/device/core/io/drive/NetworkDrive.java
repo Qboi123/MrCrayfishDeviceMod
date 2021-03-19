@@ -3,7 +3,7 @@ package com.mrcrayfish.device.core.io.drive;
 import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.core.io.ServerFolder;
 import com.mrcrayfish.device.core.io.action.FileAction;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public final class NetworkDrive extends AbstractDrive
 {
@@ -72,7 +72,7 @@ public final class NetworkDrive extends AbstractDrive
     }
 
     @Override
-    public NBTTagCompound toTag()
+    public CompoundNBT toTag()
     {
         return null;
     }

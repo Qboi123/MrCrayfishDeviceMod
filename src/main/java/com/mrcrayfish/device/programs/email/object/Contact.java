@@ -1,7 +1,7 @@
 package com.mrcrayfish.device.programs.email.object;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class Contact
 {

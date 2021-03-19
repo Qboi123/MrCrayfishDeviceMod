@@ -9,7 +9,7 @@ import com.mrcrayfish.device.api.app.component.Label;
 import com.mrcrayfish.device.object.Game;
 import com.mrcrayfish.device.object.TileGrid;
 import com.mrcrayfish.device.object.tiles.Tile;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nullable;
 
@@ -33,7 +33,7 @@ public class ApplicationBoatRacers extends Application
 	}
 	
 	@Override
-	public void init(@Nullable NBTTagCompound intent)
+	public void init(@Nullable CompoundNBT intent)
 	{
 		layoutLevelEditor = new Layout(364, 178);
 		
@@ -90,13 +90,13 @@ public class ApplicationBoatRacers extends Application
 	}
 
 	@Override
-	public void load(NBTTagCompound tagCompound) {
+	public void load(CompoundNBT tagCompound) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void save(NBTTagCompound tagCompound) {
+	public void save(CompoundNBT tagCompound) {
 		// TODO Auto-generated method stub
 
 	}

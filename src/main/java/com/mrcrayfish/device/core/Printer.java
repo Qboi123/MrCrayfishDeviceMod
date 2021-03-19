@@ -4,7 +4,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class Printer extends GuiContainer
 {

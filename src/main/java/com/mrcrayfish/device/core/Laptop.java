@@ -2,7 +2,7 @@ package com.mrcrayfish.device.core;
 
 import com.google.common.collect.ImmutableList;
 import com.mrcrayfish.device.MrCrayfishDeviceMod;
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import com.mrcrayfish.device.api.ApplicationManager;
 import com.mrcrayfish.device.api.app.Application;
 import com.mrcrayfish.device.api.app.Dialog;
@@ -22,19 +22,18 @@ import com.mrcrayfish.device.programs.system.SystemApplication;
 import com.mrcrayfish.device.programs.system.component.FileBrowser;
 import com.mrcrayfish.device.programs.system.task.TaskUpdateApplicationData;
 import com.mrcrayfish.device.programs.system.task.TaskUpdateSystemData;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import com.mrcrayfish.device.util.GuiHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.util.Constants;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -50,9 +49,9 @@ public class Laptop extends GuiScreen implements System
 {
 	public static final int ID = 1;
 	
-	private static final ResourceLocation LAPTOP_GUI = new ResourceLocation(Reference.MOD_ID, "textures/gui/laptop.png");
+	private static final ResourceLocation LAPTOP_GUI = new ResourceLocation(Constants.MOD_ID, "textures/gui/laptop.png");
 
-	public static final ResourceLocation ICON_TEXTURES = new ResourceLocation(Reference.MOD_ID, "textures/atlas/app_icons.png");
+	public static final ResourceLocation ICON_TEXTURES = new ResourceLocation(Constants.MOD_ID, "textures/atlas/app_icons.png");
 	public static final int ICON_SIZE = 14;
 
 	public static final FontRenderer fontRenderer = new LaptopFontRenderer(Minecraft.getMinecraft());
@@ -75,8 +74,8 @@ public class Laptop extends GuiScreen implements System
 	private Window[] windows;
 	private Layout context = null;
 
-	private NBTTagCompound appData;
-	private NBTTagCompound systemData;
+	private CompoundNBT appData;
+	private CompoundNBT systemData;
 
 	private int currentWallpaper;
 	private int lastMouseX, lastMouseY;
@@ -84,7 +83,7 @@ public class Laptop extends GuiScreen implements System
 
 	protected List<AppInfo> installedApps = new ArrayList<>();
 
-	public Laptop(TileEntityLaptop laptop)
+	public Laptop(LaptopTileEntity laptop)
 	{
 		this.appData = laptop.getApplicationData();
 		this.systemData = laptop.getSystemData();
@@ -120,7 +119,7 @@ public class Laptop extends GuiScreen implements System
 		bar.init(posX + BORDER, posY + DEVICE_HEIGHT - 28);
 
 		installedApps.clear();
-		NBTTagList tagList = systemData.getTagList("InstalledApps", Constants.NBT.TAG_STRING);
+		NBTTagList tagList = systemData.getTagList("InstalledApps", net.minecraftforge.common.util.Constants.NBT.TAG_STRING);
 		for(int i = 0; i < tagList.tagCount(); i++)
 		{
 			AppInfo info = ApplicationManager.getApplication(tagList.getStringTagAt(i));
@@ -231,11 +230,11 @@ public class Laptop extends GuiScreen implements System
 
 		if(!MrCrayfishDeviceMod.DEVELOPER_MODE)
 		{
-			drawString(fontRenderer, "Alpha v" + Reference.VERSION, posX + BORDER + 5, posY + BORDER + 5, Color.WHITE.getRGB());
+			drawString(fontRenderer, "Alpha v" + Constants.VERSION, posX + BORDER + 5, posY + BORDER + 5, Color.WHITE.getRGB());
 		}
 		else
 		{
-			drawString(fontRenderer, "Developer Version - " + Reference.VERSION, posX + BORDER + 5, posY + BORDER + 5, Color.WHITE.getRGB());
+			drawString(fontRenderer, "Developer Version - " + Constants.VERSION, posX + BORDER + 5, posY + BORDER + 5, Color.WHITE.getRGB());
 		}
 
 		boolean insideContext = false;
@@ -479,17 +478,17 @@ public class Laptop extends GuiScreen implements System
 	@Override
 	public void openApplication(AppInfo info)
 	{
-		openApplication(info, (NBTTagCompound) null);
+		openApplication(info, (CompoundNBT) null);
 	}
 
 	@Override
-	public void openApplication(AppInfo info, NBTTagCompound intentTag)
+	public void openApplication(AppInfo info, CompoundNBT intentTag)
 	{
 		Optional<Application> optional = APPLICATIONS.stream().filter(app -> app.getInfo() == info).findFirst();
 		optional.ifPresent(application -> openApplication(application, intentTag));
 	}
 
-	private void openApplication(Application app, NBTTagCompound intent)
+	private void openApplication(Application app, CompoundNBT intent)
 	{
 		if(!isApplicationInstalled(app.getInfo()))
 			return;
@@ -572,7 +571,7 @@ public class Laptop extends GuiScreen implements System
 				{
 					if(app.isDirty())
 					{
-						NBTTagCompound container = new NBTTagCompound();
+						CompoundNBT container = new CompoundNBT();
 						app.save(container);
 						app.clean();
 						appData.setTag(app.getInfo().getFormattedId(), container);

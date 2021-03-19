@@ -1,15 +1,15 @@
 package com.mrcrayfish.device.core.network.task;
 
 import com.mrcrayfish.device.api.task.Task;
-import com.mrcrayfish.device.tileentity.TileEntityNetworkDevice;
+import com.mrcrayfish.device.tileentity.NetworkDeviceTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskPing extends Task
 {
@@ -28,18 +28,18 @@ public class TaskPing extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setLong("sourceDevicePos", sourceDevicePos.toLong());
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         TileEntity tileEntity = world.getTileEntity(BlockPos.fromLong(nbt.getLong("sourceDevicePos")));
-        if(tileEntity instanceof TileEntityNetworkDevice)
+        if(tileEntity instanceof NetworkDeviceTileEntity)
         {
-            TileEntityNetworkDevice tileEntityNetworkDevice = (TileEntityNetworkDevice) tileEntity;
+            NetworkDeviceTileEntity tileEntityNetworkDevice = (NetworkDeviceTileEntity) tileEntity;
             if(tileEntityNetworkDevice.isConnected())
             {
                 this.strength = tileEntityNetworkDevice.getSignalStrength();
@@ -49,7 +49,7 @@ public class TaskPing extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
         if(this.isSucessful())
         {
@@ -58,7 +58,7 @@ public class TaskPing extends Task
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
 
     }

@@ -10,7 +10,7 @@ import java.nio.FloatBuffer;
 import java.util.Stack;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class GLHelper
 {

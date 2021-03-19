@@ -1,7 +1,7 @@
 package com.mrcrayfish.device.core.io;
 
 import com.mrcrayfish.device.core.io.FileSystem.Status;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ServerFolder extends ServerFile
 {
@@ -136,11 +136,11 @@ public class ServerFolder extends ServerFile
     }
 
     @Override
-    public NBTTagCompound toTag()
+    public CompoundNBT toTag()
     {
-        NBTTagCompound folderTag = new NBTTagCompound();
+        CompoundNBT folderTag = new CompoundNBT();
 
-        NBTTagCompound fileList = new NBTTagCompound();
+        CompoundNBT fileList = new CompoundNBT();
         files.stream().forEach(file -> fileList.setTag(file.getName(), file.toTag()));
         folderTag.setTag("files", fileList);
 
@@ -149,17 +149,17 @@ public class ServerFolder extends ServerFile
         return folderTag;
     }
 
-    public static ServerFolder fromTag(String name, NBTTagCompound folderTag)
+    public static ServerFolder fromTag(String name, CompoundNBT folderTag)
     {
         ServerFolder folder = new ServerFolder(name);
 
         if(folderTag.hasKey("protected", Constants.NBT.TAG_BYTE))
             folder.protect = folderTag.getBoolean("protected");
 
-        NBTTagCompound fileList = folderTag.getCompoundTag("files");
+        CompoundNBT fileList = folderTag.getCompoundTag("files");
         for(String fileName : fileList.getKeySet())
         {
-            NBTTagCompound fileTag = fileList.getCompoundTag(fileName);
+            CompoundNBT fileTag = fileList.getCompoundTag(fileName);
             if(fileTag.hasKey("files"))
             {
                 folder.add(ServerFolder.fromTag(fileName, fileTag), false);
@@ -173,7 +173,7 @@ public class ServerFolder extends ServerFile
     }
 
     @Override
-    public FileSystem.Response setData(@Nonnull NBTTagCompound data)
+    public FileSystem.Response setData(@Nonnull CompoundNBT data)
     {
         return FileSystem.createResponse(Status.FILE_INVALID_DATA, "Data can not be set to a folder");
     }

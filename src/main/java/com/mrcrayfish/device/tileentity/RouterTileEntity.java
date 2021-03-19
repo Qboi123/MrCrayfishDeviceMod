@@ -1,16 +1,16 @@
 package com.mrcrayfish.device.tileentity;
 
 import com.mrcrayfish.device.core.network.Router;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
-public class TileEntityRouter extends TileEntityDevice.Colored
+public class RouterTileEntity extends DeviceTileEntity.Colored
 {
     private Router router;
 
@@ -65,7 +65,7 @@ public class TileEntityRouter extends TileEntityDevice.Colored
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    public CompoundNBT writeToNBT(CompoundNBT compound)
     {
         super.writeToNBT(compound);
         compound.setTag("router", getRouter().toTag(false));
@@ -73,7 +73,7 @@ public class TileEntityRouter extends TileEntityDevice.Colored
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readFromNBT(CompoundNBT compound)
     {
         super.readFromNBT(compound);
         if(compound.hasKey("router", Constants.NBT.TAG_COMPOUND))

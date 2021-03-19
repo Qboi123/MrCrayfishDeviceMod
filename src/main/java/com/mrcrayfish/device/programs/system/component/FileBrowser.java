@@ -28,7 +28,7 @@ import com.mrcrayfish.device.programs.system.SystemApplication;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -120,7 +120,7 @@ public class FileBrowser extends Component
     /**
      * The default constructor for a component. For your component to
      * be laid out correctly, make sure you use the x and y parameters
-     * from {@link Wrappable#init(NBTTagCompound)} and pass them into the
+     * from {@link Wrappable#init(CompoundNBT)} and pass them into the
      * x and y arguments of this constructor.
      * <p>
      * Laying out the components is a simple relative positioning. So for left (x position),
@@ -370,7 +370,7 @@ public class FileBrowser extends Component
                 {
                     if(Laptop.getMainDrive() == null)
                     {
-                        NBTTagCompound structureTag = nbt.getCompoundTag("structure");
+                        CompoundNBT structureTag = nbt.getCompoundTag("structure");
                         Drive drive = new Drive(nbt.getCompoundTag("main_drive"));
                         drive.syncRoot(Folder.fromTag(FileSystem.LAPTOP_DRIVE_NAME, structureTag));
                         drive.getRoot().validate();
@@ -382,7 +382,7 @@ public class FileBrowser extends Component
                     drives[0] = currentDrive = Laptop.getMainDrive();
                     for(int i = 0; i < driveList.tagCount(); i++)
                     {
-                        NBTTagCompound driveTag = driveList.getCompoundTagAt(i);
+                        CompoundNBT driveTag = driveList.getCompoundTagAt(i);
                         drives[i + 1] = new Drive(driveTag);
                     }
                     comboBoxDrive.setItems(drives);

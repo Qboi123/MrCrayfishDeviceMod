@@ -3,7 +3,7 @@ package com.mrcrayfish.device.api.app;
 import com.mrcrayfish.device.network.PacketHandler;
 import com.mrcrayfish.device.network.task.MessageNotification;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -54,9 +54,9 @@ public class Notification
      *
      * @return the notification tag
      */
-    public NBTTagCompound toTag()
+    public CompoundNBT toTag()
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setString("title", title);
 
         if(!StringUtils.isEmpty(subTitle))
@@ -64,7 +64,7 @@ public class Notification
             tag.setString("subTitle", subTitle);
         }
 
-        NBTTagCompound tagIcon = new NBTTagCompound();
+        CompoundNBT tagIcon = new CompoundNBT();
         tagIcon.setInteger("ordinal", icon.getOrdinal());
         tagIcon.setString("className", icon.getClass().getName());
 

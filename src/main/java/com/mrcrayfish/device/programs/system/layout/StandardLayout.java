@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.awt.Color;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class StandardLayout extends Layout
 {

@@ -1,8 +1,8 @@
 package com.mrcrayfish.device.core.network;
 
 import com.mrcrayfish.device.DeviceConfig;
-import com.mrcrayfish.device.tileentity.TileEntityNetworkDevice;
-import net.minecraft.nbt.NBTTagCompound;
+import com.mrcrayfish.device.tileentity.NetworkDeviceTileEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class Router
 {
@@ -56,7 +56,7 @@ public class Router
         return true;
     }
 
-    public boolean addDevice(TileEntityNetworkDevice device)
+    public boolean addDevice(NetworkDeviceTileEntity device)
     {
         if(NETWORK_DEVICES.size() >= DeviceConfig.getMaxDevices())
         {
@@ -69,23 +69,23 @@ public class Router
         return true;
     }
 
-    public boolean isDeviceRegistered(TileEntityNetworkDevice device)
+    public boolean isDeviceRegistered(NetworkDeviceTileEntity device)
     {
         return NETWORK_DEVICES.containsKey(device.getId());
     }
 
-    public boolean isDeviceConnected(TileEntityNetworkDevice device)
+    public boolean isDeviceConnected(NetworkDeviceTileEntity device)
     {
         return isDeviceRegistered(device) && NETWORK_DEVICES.get(device.getId()).getPos() != null;
     }
 
-    public void removeDevice(TileEntityNetworkDevice device)
+    public void removeDevice(NetworkDeviceTileEntity device)
     {
         NETWORK_DEVICES.remove(device.getId());
     }
 
     @Nullable
-    public TileEntityNetworkDevice getDevice(World world, UUID id)
+    public NetworkDeviceTileEntity getDevice(World world, UUID id)
     {
         return NETWORK_DEVICES.containsKey(id) ? NETWORK_DEVICES.get(id).getDevice(world) : null;
     }
@@ -101,7 +101,7 @@ public class Router
         return NETWORK_DEVICES.values().stream().filter(networkDevice -> networkDevice.getPos() != null).collect(Collectors.toList());
     }
 
-    public Collection<NetworkDevice> getConnectedDevices(final World world, Class<? extends TileEntityNetworkDevice> type)
+    public Collection<NetworkDevice> getConnectedDevices(final World world, Class<? extends NetworkDeviceTileEntity> type)
     {
         final Predicate<NetworkDevice> DEVICE_TYPE = networkDevice ->
         {
@@ -109,7 +109,7 @@ public class Router
                 return false;
 
             TileEntity tileEntity = world.getTileEntity(networkDevice.getPos());
-            if(tileEntity instanceof TileEntityNetworkDevice)
+            if(tileEntity instanceof NetworkDeviceTileEntity)
             {
                 return type.isAssignableFrom(tileEntity.getClass());
             }
@@ -133,9 +133,9 @@ public class Router
                 {
                     BlockPos currentPos = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
                     TileEntity tileEntity = world.getTileEntity(currentPos);
-                    if(tileEntity instanceof TileEntityNetworkDevice)
+                    if(tileEntity instanceof NetworkDeviceTileEntity)
                     {
-                        TileEntityNetworkDevice tileEntityNetworkDevice = (TileEntityNetworkDevice) tileEntity;
+                        NetworkDeviceTileEntity tileEntityNetworkDevice = (NetworkDeviceTileEntity) tileEntity;
                         if(!NETWORK_DEVICES.containsKey(tileEntityNetworkDevice.getId()))
                             continue;
                         if(tileEntityNetworkDevice.receiveBeacon(this))
@@ -167,9 +167,9 @@ public class Router
         this.pos = pos;
     }
 
-    public NBTTagCompound toTag(boolean includePos)
+    public CompoundNBT toTag(boolean includePos)
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setUniqueId("id", getId());
 
         NBTTagList deviceList = new NBTTagList();
@@ -181,7 +181,7 @@ public class Router
         return tag;
     }
 
-    public static Router fromTag(BlockPos pos, NBTTagCompound tag)
+    public static Router fromTag(BlockPos pos, CompoundNBT tag)
     {
         Router router = new Router(pos);
         router.routerId = tag.getUniqueId("id");

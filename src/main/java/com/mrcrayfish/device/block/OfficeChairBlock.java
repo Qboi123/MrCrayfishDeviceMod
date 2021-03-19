@@ -1,22 +1,24 @@
 package com.mrcrayfish.device.block;
 
 import com.mrcrayfish.device.MrCrayfishDeviceMod;
-import com.mrcrayfish.device.entity.EntitySeat;
+import com.mrcrayfish.device.entity.SeatEntity;
 import com.mrcrayfish.device.object.Bounds;
-import com.mrcrayfish.device.tileentity.TileEntityOfficeChair;
+import com.mrcrayfish.device.tileentity.OfficeChairTileEntity;
 import com.mrcrayfish.device.util.SeatUtil;
 import net.minecraft.block.BlockColored;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.Property;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.DyeColor;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -28,23 +30,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
-public class BlockOfficeChair extends BlockDevice.Colored
+public class OfficeChairBlock extends DeviceBlock.Colored
 {
-    public static final PropertyEnum<Type> TYPE = PropertyEnum.create("type", Type.class);
+    public static final Property<Type> TYPE = Property.create("type", Type.class);
 
     private static final AxisAlignedBB EMPTY_BOX = new Bounds(0, 0, 0, 0, 0, 0).toAABB();
     private static final AxisAlignedBB SELECTION_BOX = new Bounds(1, 0, 1, 15, 27, 15).toAABB();
     private static final AxisAlignedBB SEAT_BOUNDING_BOX = new Bounds(1, 0, 1, 15, 10, 15).toAABB();
 
-    public BlockOfficeChair()
+    public OfficeChairBlock()
     {
         super(Material.ROCK);
         this.setUnlocalizedName("office_chair");
         this.setRegistryName("office_chair");
-        this.setCreativeTab(MrCrayfishDeviceMod.TAB_DEVICE);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(BlockColored.COLOR, EnumDyeColor.RED).withProperty(TYPE, Type.LEGS));
+        this.setCreativeTab(MrCrayfishDeviceMod.ITEM_GROUP);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, Direction.NORTH).withProperty(BlockColored.COLOR, DyeColor.RED).withProperty(TYPE, Type.LEGS));
     }
 
     @Override
@@ -60,13 +62,13 @@ public class BlockOfficeChair extends BlockDevice.Colored
     }
 
     @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, Direction face)
     {
         return BlockFaceShape.UNDEFINED;
     }
 
     @Override
-    public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, EnumFacing facing)
+    public boolean canBeConnectedTo(IBlockAccess world, BlockPos pos, Direction facing)
     {
         return false;
     }
@@ -75,7 +77,7 @@ public class BlockOfficeChair extends BlockDevice.Colored
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        if(Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.getRidingEntity() instanceof EntitySeat)
+        if(Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.getRidingEntity() instanceof SeatEntity)
         {
             return EMPTY_BOX;
         }
@@ -90,7 +92,7 @@ public class BlockOfficeChair extends BlockDevice.Colored
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ)
     {
         if(!worldIn.isRemote)
         {
@@ -103,7 +105,7 @@ public class BlockOfficeChair extends BlockDevice.Colored
     @Override
     public TileEntity createTileEntity(World world, IBlockState state)
     {
-        return new TileEntityOfficeChair();
+        return new OfficeChairTileEntity();
     }
 
     @Override

@@ -7,7 +7,7 @@ import com.mrcrayfish.device.programs.auction.object.AuctionItem;
 import com.mrcrayfish.device.programs.system.object.Account;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 import java.util.UUID;
@@ -28,13 +28,13 @@ public class TaskBuyItem extends Task
 	}
 
 	@Override
-	public void prepareRequest(NBTTagCompound nbt)
+	public void prepareRequest(CompoundNBT nbt)
 	{
 		nbt.setString("id", id.toString());
 	}
 
 	@Override
-	public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+	public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
 	{
 		this.id = UUID.fromString(nbt.getString("id"));
 		AuctionItem item = AuctionManager.INSTANCE.getItem(id);
@@ -53,8 +53,8 @@ public class TaskBuyItem extends Task
 	}
 
 	@Override
-	public void prepareResponse(NBTTagCompound nbt) {}
+	public void prepareResponse(CompoundNBT nbt) {}
 
 	@Override
-	public void processResponse(NBTTagCompound nbt) {}
+	public void processResponse(CompoundNBT nbt) {}
 }

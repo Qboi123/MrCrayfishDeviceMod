@@ -7,24 +7,24 @@ import com.mrcrayfish.device.recipe.RecipeLaptop;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class LaptopRecipeWrapper implements IShapedCraftingRecipeWrapper
 {
     private List<ItemStack> inputs;
     private List<ItemStack> outputs;
 
-    public LaptopRecipeWrapper(EnumDyeColor color)
+    public LaptopRecipeWrapper(DyeColor color)
     {
         ItemStack motherboard = new ItemStack(DeviceItems.COMPONENT_MOTHERBOARD);
-        NBTTagCompound tag = motherboard.getOrCreateSubCompound("components");
+        CompoundNBT tag = motherboard.getOrCreateSubCompound("components");
         tag.setBoolean("cpu", true);
         tag.setBoolean("ram", true);
         tag.setBoolean("gpu", true);

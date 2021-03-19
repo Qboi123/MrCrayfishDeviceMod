@@ -1,6 +1,6 @@
 package com.mrcrayfish.device;
 
-public class Reference 
+public class Constants
 {
 	public static final String MOD_ID = "cdm";
 	public static final String NAME = "MrCrayfish's Device Mod";

@@ -1,7 +1,7 @@
 package com.mrcrayfish.device.api.app.listener;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public interface KeyListener
 {

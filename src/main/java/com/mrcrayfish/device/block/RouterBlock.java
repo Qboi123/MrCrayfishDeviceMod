@@ -4,11 +4,9 @@ import com.mrcrayfish.device.MrCrayfishDeviceMod;
 import com.mrcrayfish.device.network.PacketHandler;
 import com.mrcrayfish.device.network.task.MessageSyncBlock;
 import com.mrcrayfish.device.object.Bounds;
-import com.mrcrayfish.device.tileentity.TileEntityRouter;
-import com.mrcrayfish.device.util.IColored;
+import com.mrcrayfish.device.tileentity.RouterTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -17,8 +15,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -28,9 +26,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
-public class BlockRouter extends BlockDevice.Colored
+public class RouterBlock extends DeviceBlock.Colored
 {
     public static final PropertyBool VERTICAL = PropertyBool.create("vertical");
 
@@ -39,11 +37,11 @@ public class BlockRouter extends BlockDevice.Colored
     private static final AxisAlignedBB[] SELECTION_BOUNDING_BOX = new Bounds(3, 0, 1, 13, 3, 15).getRotatedBounds();
     private static final AxisAlignedBB[] SELECTION_VERTICAL_BOUNDING_BOX = new Bounds(13, 0, 1, 16, 10, 15).getRotatedBounds();
 
-    public BlockRouter()
+    public RouterBlock()
     {
         super(Material.ANVIL);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(VERTICAL, false));
-        this.setCreativeTab(MrCrayfishDeviceMod.TAB_DEVICE);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, Direction.NORTH).withProperty(VERTICAL, false));
+        this.setCreativeTab(MrCrayfishDeviceMod.ITEM_GROUP);
         this.setUnlocalizedName("router");
         this.setRegistryName("router");
     }
@@ -72,14 +70,14 @@ public class BlockRouter extends BlockDevice.Colored
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ)
     {
         if(worldIn.isRemote && playerIn.capabilities.isCreativeMode)
         {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
-            if(tileEntity instanceof TileEntityRouter)
+            if(tileEntity instanceof RouterTileEntity)
             {
-                TileEntityRouter tileEntityRouter = (TileEntityRouter) tileEntity;
+                RouterTileEntity tileEntityRouter = (RouterTileEntity) tileEntity;
                 tileEntityRouter.setDebug();
                 if(tileEntityRouter.isDebug())
                 {
@@ -92,23 +90,23 @@ public class BlockRouter extends BlockDevice.Colored
     }
 
     @Override
-    public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
+    public IBlockState getStateForPlacement(World world, BlockPos pos, Direction facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, Hand hand)
     {
         IBlockState state = super.getStateForPlacement(world, pos, facing, hitX, hitY, hitZ, meta, placer, hand);
         return state.withProperty(VERTICAL, facing.getHorizontalIndex() != -1);
     }
 
     @Override
-    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side)
+    public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, Direction side)
     {
-        return side != EnumFacing.DOWN;
+        return side != Direction.DOWN;
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state)
     {
-        return new TileEntityRouter();
+        return new RouterTileEntity();
     }
 
     @Override

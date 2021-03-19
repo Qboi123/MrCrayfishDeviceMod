@@ -6,7 +6,7 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 @JEIPlugin
 public class CraftingPlugin implements IModPlugin

@@ -1,0 +1,29 @@
+# This is an example mods.toml file. It contains the data relating to the loading mods.
+# There are several mandatory fields (#mandatory), and many more that are optional (#optional).
+# The overall format is standard TOML format, v0.5.0.
+# Note that there are a couple of TOML lists in this file.
+# Find more information on toml format here:  https://github.com/toml-lang/toml
+# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
+modLoader="javafml" #mandatory
+license="""(C) Copyright 2021 - MrCrayfish and QTech Community -
+MrCrayfish Device Mod is licensed under the terms of the LGPL 2.1 found
+here http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt."""
+
+# A version range to match for said mod loader - for regular FML @Mod it will be the forge version
+loaderVersion="[34,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+
+# A URL to refer people to when problems occur with this mod
+#issueTrackerURL="http://my.issue.tracker/" #optional
+
+# A list of mods - how many allowed here is determined by the individual mod loader
+
+[[mods]] #mandatory
+modId="cdm" #mandatory
+version="0.5.0" #mandatory
+displayName="QForgeMod: Main Module" #mandatory
+#updateJSONURL="http://myurl.me/" #optional
+displayURL="https://quintenjungblut.wixsite.com/qplaysoftware/" #optional
+#logoFile="qfm.png" #optional
+credits="Thank you to MinecraftDoodler for helping with textures, and thanks to MrCrayfish for the original mod. Cheers to these people for donating during the development: Mastef Chief, Haunted Corpse, Jake Crowley, fabbe50, PlayDashGaming, jack jook, Hunstagamez, Techyy YT, MinecraftDoodler, Norge100YT, Cyberman2208, CreepergamingsMC" #optional
+authors="Qboi123, MrCrayfish (Original)" #optional
+description='''Adds working electronic devices into Minecraft!'''

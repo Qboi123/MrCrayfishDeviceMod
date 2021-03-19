@@ -1,7 +1,7 @@
 package com.mrcrayfish.device.gui;
 
 import com.mrcrayfish.device.core.Laptop;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -22,9 +22,9 @@ public class GuiHandler implements IGuiHandler
 		if(ID == Laptop.ID)
 		{
 			TileEntity tileEntity = player.world.getTileEntity(new BlockPos(x, y, z));
-			if(tileEntity instanceof TileEntityLaptop)
+			if(tileEntity instanceof LaptopTileEntity)
 			{
-				TileEntityLaptop laptop = (TileEntityLaptop) tileEntity;
+				LaptopTileEntity laptop = (LaptopTileEntity) tileEntity;
 				return new Laptop(laptop);
 			}
 		}

@@ -15,9 +15,9 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
-public class MessageSyncApplications implements IMessage, IMessageHandler<MessageSyncApplications, MessageSyncApplications>
+public class MessageSyncApplications implements Message<IMessage, IMessageHandler<MessageSyncApplications, MessageSyncApplications>
 {
     private List<AppInfo> allowedApps;
 

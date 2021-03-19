@@ -1,11 +1,11 @@
 package com.mrcrayfish.device.object;
 
 import com.mrcrayfish.device.util.CollisionHelper;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class Bounds
 {
@@ -37,17 +37,17 @@ public class Bounds
         return new AxisAlignedBB(x1, y1, z1, x2, y2, z2);
     }
 
-    public AxisAlignedBB getRotation(EnumFacing facing)
+    public AxisAlignedBB getRotation(Direction facing)
     {
         return CollisionHelper.getBlockBounds(facing, this);
     }
 
     public AxisAlignedBB[] getRotatedBounds()
     {
-        AxisAlignedBB boundsNorth = CollisionHelper.getBlockBounds(EnumFacing.NORTH, this);
-        AxisAlignedBB boundsEast = CollisionHelper.getBlockBounds(EnumFacing.EAST, this);
-        AxisAlignedBB boundsSouth = CollisionHelper.getBlockBounds(EnumFacing.SOUTH, this);
-        AxisAlignedBB boundsWest = CollisionHelper.getBlockBounds(EnumFacing.WEST, this);
+        AxisAlignedBB boundsNorth = CollisionHelper.getBlockBounds(Direction.NORTH, this);
+        AxisAlignedBB boundsEast = CollisionHelper.getBlockBounds(Direction.EAST, this);
+        AxisAlignedBB boundsSouth = CollisionHelper.getBlockBounds(Direction.SOUTH, this);
+        AxisAlignedBB boundsWest = CollisionHelper.getBlockBounds(Direction.WEST, this);
         return new AxisAlignedBB[] { boundsSouth, boundsWest, boundsNorth, boundsEast };
     }
 }

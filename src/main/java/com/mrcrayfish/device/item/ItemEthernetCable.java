@@ -3,24 +3,23 @@ package com.mrcrayfish.device.item;
 import com.mrcrayfish.device.DeviceConfig;
 import com.mrcrayfish.device.MrCrayfishDeviceMod;
 import com.mrcrayfish.device.core.network.Router;
-import com.mrcrayfish.device.tileentity.TileEntityNetworkDevice;
-import com.mrcrayfish.device.tileentity.TileEntityRouter;
+import com.mrcrayfish.device.tileentity.NetworkDeviceTileEntity;
+import com.mrcrayfish.device.tileentity.RouterTileEntity;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SPacketChat;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,7 +29,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ItemEthernetCable extends Item
 {
@@ -38,36 +37,36 @@ public class ItemEthernetCable extends Item
     {
         this.setUnlocalizedName("ethernet_cable");
         this.setRegistryName("ethernet_cable");
-        this.setCreativeTab(MrCrayfishDeviceMod.TAB_DEVICE);
+        this.setCreativeTab(MrCrayfishDeviceMod.ITEM_GROUP);
         this.setMaxStackSize(1);
     }
 
     @Override
-    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand)
+    public ActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, Direction side, float hitX, float hitY, float hitZ, Hand hand)
     {
         if(!world.isRemote)
         {
             ItemStack heldItem = player.getHeldItem(hand);
             TileEntity tileEntity = world.getTileEntity(pos);
 
-            if(tileEntity instanceof TileEntityRouter)
+            if(tileEntity instanceof RouterTileEntity)
             {
                 if(!heldItem.hasTagCompound())
                 {
                     sendGameInfoMessage(player, "message.invalid_cable");
-                    return EnumActionResult.SUCCESS;
+                    return ActionResult.SUCCESS;
                 }
 
-                TileEntityRouter tileEntityRouter = (TileEntityRouter) tileEntity;
+                RouterTileEntity tileEntityRouter = (RouterTileEntity) tileEntity;
                 Router router = tileEntityRouter.getRouter();
 
-                NBTTagCompound tag = heldItem.getTagCompound();
+                CompoundNBT tag = heldItem.getTagCompound();
                 BlockPos devicePos = BlockPos.fromLong(tag.getLong("pos"));
 
                 TileEntity tileEntity1 = world.getTileEntity(devicePos);
-                if(tileEntity1 instanceof TileEntityNetworkDevice)
+                if(tileEntity1 instanceof NetworkDeviceTileEntity)
                 {
-                    TileEntityNetworkDevice tileEntityNetworkDevice = (TileEntityNetworkDevice) tileEntity1;
+                    NetworkDeviceTileEntity tileEntityNetworkDevice = (NetworkDeviceTileEntity) tileEntity1;
                     if(!router.isDeviceRegistered(tileEntityNetworkDevice))
                     {
                         if(router.addDevice(tileEntityNetworkDevice))
@@ -105,35 +104,35 @@ public class ItemEthernetCable extends Item
                         sendGameInfoMessage(player, "message.router_max_devices");
                     }
                 }
-                return EnumActionResult.SUCCESS;
+                return ActionResult.SUCCESS;
             }
 
-            if(tileEntity instanceof TileEntityNetworkDevice)
+            if(tileEntity instanceof NetworkDeviceTileEntity)
             {
-                TileEntityNetworkDevice tileEntityNetworkDevice = (TileEntityNetworkDevice) tileEntity;
-                heldItem.setTagCompound(new NBTTagCompound());
-                NBTTagCompound tag = heldItem.getTagCompound();
+                NetworkDeviceTileEntity tileEntityNetworkDevice = (NetworkDeviceTileEntity) tileEntity;
+                heldItem.setTagCompound(new CompoundNBT());
+                CompoundNBT tag = heldItem.getTagCompound();
                 tag.setUniqueId("id", tileEntityNetworkDevice.getId());
                 tag.setString("name", tileEntityNetworkDevice.getCustomName());
                 tag.setLong("pos", tileEntityNetworkDevice.getPos().toLong());
 
                 sendGameInfoMessage(player, "message.select_router");
-                return EnumActionResult.SUCCESS;
+                return ActionResult.SUCCESS;
             }
         }
-        return EnumActionResult.SUCCESS;
+        return ActionResult.SUCCESS;
     }
 
     private void sendGameInfoMessage(EntityPlayer player, String message)
     {
         if(player instanceof EntityPlayerMP)
         {
-            ((EntityPlayerMP) player).connection.sendPacket(new SPacketChat(new TextComponentTranslation(message), ChatType.GAME_INFO));
+            ((EntityPlayerMP) player).connection.sendPacket(new SPacketChat(new TranslationTextComponent(message), ChatType.GAME_INFO));
         }
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, Hand hand)
     {
         if(!world.isRemote)
         {
@@ -142,7 +141,7 @@ public class ItemEthernetCable extends Item
             {
                 heldItem.clearCustomName();
                 heldItem.setTagCompound(null);
-                return new ActionResult<>(EnumActionResult.SUCCESS, heldItem);
+                return new ActionResult<>(ActionResult.SUCCESS, heldItem);
             }
         }
         return super.onItemRightClick(world, player, hand);
@@ -154,7 +153,7 @@ public class ItemEthernetCable extends Item
     {
         if(stack.hasTagCompound())
         {
-            NBTTagCompound tag = stack.getTagCompound();
+            CompoundNBT tag = stack.getTagCompound();
             if(tag != null)
             {
                 tooltip.add(TextFormatting.RED.toString() + TextFormatting.BOLD.toString() + "ID: " + TextFormatting.RESET.toString() + tag.getUniqueId("id"));

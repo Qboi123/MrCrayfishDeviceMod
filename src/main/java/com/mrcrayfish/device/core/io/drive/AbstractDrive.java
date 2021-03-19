@@ -4,7 +4,7 @@ import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.core.io.ServerFile;
 import com.mrcrayfish.device.core.io.ServerFolder;
 import com.mrcrayfish.device.core.io.action.FileAction;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
@@ -14,7 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public abstract class AbstractDrive
 {
@@ -53,11 +53,11 @@ public abstract class AbstractDrive
 
     public FileSystem.Response handleFileAction(FileSystem fileSystem, FileAction action, World world)
     {
-        NBTTagCompound actionData = action.getData();
+        CompoundNBT actionData = action.getData();
         ServerFolder folder = getFolder(actionData.getString("directory"));
         if(folder != null)
         {
-            NBTTagCompound data = actionData.getCompoundTag("data");
+            CompoundNBT data = actionData.getCompoundTag("data");
             switch(action.getType())
             {
                 case NEW:
@@ -124,7 +124,7 @@ public abstract class AbstractDrive
         return FileSystem.createResponse(FileSystem.Status.DRIVE_UNAVAILABLE, "Invalid directory");
     }
 
-    public abstract NBTTagCompound toTag();
+    public abstract CompoundNBT toTag();
 
     public abstract Type getType();
 

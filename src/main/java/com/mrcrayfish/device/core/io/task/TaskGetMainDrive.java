@@ -6,16 +6,16 @@ import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.core.Laptop;
 import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.core.io.drive.AbstractDrive;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskGetMainDrive extends Task
 {
@@ -35,18 +35,18 @@ public class TaskGetMainDrive extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setLong("pos", pos.toLong());
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         TileEntity tileEntity = world.getTileEntity(BlockPos.fromLong(nbt.getLong("pos")));
-        if(tileEntity instanceof TileEntityLaptop)
+        if(tileEntity instanceof LaptopTileEntity)
         {
-            TileEntityLaptop laptop = (TileEntityLaptop) tileEntity;
+            LaptopTileEntity laptop = (LaptopTileEntity) tileEntity;
             FileSystem fileSystem = laptop.getFileSystem();
             mainDrive = fileSystem.getMainDrive();
             this.setSuccessful();
@@ -54,11 +54,11 @@ public class TaskGetMainDrive extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
         if(this.isSucessful())
         {
-            NBTTagCompound mainDriveTag = new NBTTagCompound();
+            CompoundNBT mainDriveTag = new CompoundNBT();
             mainDriveTag.setString("name", mainDrive.getName());
             mainDriveTag.setString("uuid", mainDrive.getUUID().toString());
             mainDriveTag.setString("type", mainDrive.getType().toString());
@@ -68,13 +68,13 @@ public class TaskGetMainDrive extends Task
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
         if(this.isSucessful())
         {
             if(Minecraft.getMinecraft().currentScreen instanceof Laptop)
             {
-                NBTTagCompound structureTag = nbt.getCompoundTag("structure");
+                CompoundNBT structureTag = nbt.getCompoundTag("structure");
                 Drive drive = new Drive(nbt.getCompoundTag("main_drive"));
                 drive.syncRoot(Folder.fromTag(FileSystem.LAPTOP_DRIVE_NAME, structureTag));
                 drive.getRoot().validate();

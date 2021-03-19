@@ -4,7 +4,7 @@ import com.mrcrayfish.device.item.*;
 import net.minecraft.item.Item;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class DeviceItems
 {

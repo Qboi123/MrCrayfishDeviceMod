@@ -8,7 +8,7 @@ import com.mrcrayfish.device.programs.system.task.TaskGetBalance;
 import com.mrcrayfish.device.programs.system.task.TaskPay;
 import com.mrcrayfish.device.programs.system.task.TaskRemove;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 
 import java.util.HashMap;
@@ -41,7 +41,7 @@ public class BankUtil
 	 * 
 	 * @param callback he callback object to processing the response
 	 */
-	public static void getBalance(Callback<NBTTagCompound> callback)
+	public static void getBalance(Callback<CompoundNBT> callback)
 	{
 		TaskManager.sendTask(new TaskGetBalance().setCallback(callback));
 	}
@@ -55,7 +55,7 @@ public class BankUtil
 	 * @param amount the amount to pay 
 	 * @param callback the callback object to processing the response
 	 */
-	public static void pay(String uuid, int amount, Callback<NBTTagCompound> callback)
+	public static void pay(String uuid, int amount, Callback<CompoundNBT> callback)
 	{
 		TaskManager.sendTask(new TaskPay().setCallback(callback));
 	}
@@ -67,7 +67,7 @@ public class BankUtil
 	 * 
 	 * @param callback he callback object to processing the response
 	 */
-	public static void add(int amount, Callback<NBTTagCompound> callback)
+	public static void add(int amount, Callback<CompoundNBT> callback)
 	{
 		TaskManager.sendTask(new TaskAdd(amount).setCallback(callback));
 	}
@@ -79,7 +79,7 @@ public class BankUtil
 	 * 
 	 * @param callback he callback object to processing the response
 	 */
-	public static void remove(int amount, Callback<NBTTagCompound> callback)
+	public static void remove(int amount, Callback<CompoundNBT> callback)
 	{
 		TaskManager.sendTask(new TaskRemove(amount).setCallback(callback));
 	}
@@ -100,12 +100,12 @@ public class BankUtil
 		return uuidToAccount.get(uuid);
 	}
 	
-	public void save(NBTTagCompound tag) 
+	public void save(CompoundNBT tag) 
 	{
 		NBTTagList accountList = new NBTTagList();
 		for(UUID uuid : uuidToAccount.keySet())
 		{
-			NBTTagCompound accountTag = new NBTTagCompound();
+			CompoundNBT accountTag = new CompoundNBT();
 			Account account = uuidToAccount.get(uuid);
 			accountTag.setString("uuid", uuid.toString());
 			accountTag.setInteger("balance", account.getBalance());
@@ -114,12 +114,12 @@ public class BankUtil
 		tag.setTag("accounts", accountList);
 	}
 	
-	public void load(NBTTagCompound tag) 
+	public void load(CompoundNBT tag) 
 	{
 		NBTTagList accountList = (NBTTagList) tag.getTag("accounts");
 		for(int i = 0; i < accountList.tagCount(); i++)
 		{
-			NBTTagCompound accountTag = accountList.getCompoundTagAt(i);
+			CompoundNBT accountTag = accountList.getCompoundTagAt(i);
 			UUID uuid = UUID.fromString(accountTag.getString("uuid"));
 			Account account = new Account(accountTag.getInteger("balance"));
 			uuidToAccount.put(uuid, account);

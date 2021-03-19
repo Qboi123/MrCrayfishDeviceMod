@@ -5,7 +5,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class LaptopFontRenderer extends FontRenderer
 {

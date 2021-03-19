@@ -3,13 +3,13 @@ package com.mrcrayfish.device.item;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ItemDevice extends ItemBlock
 {
@@ -22,9 +22,9 @@ public class ItemDevice extends ItemBlock
     //This method is still bugged due to Forge.
     @Nullable
     @Override
-    public NBTTagCompound getNBTShareTag(ItemStack stack)
+    public CompoundNBT getNBTShareTag(ItemStack stack)
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         if(stack.getTagCompound() != null && stack.getTagCompound().hasKey("display", Constants.NBT.TAG_COMPOUND))
         {
             tag.setTag("display", stack.getTagCompound().getTag("display"));

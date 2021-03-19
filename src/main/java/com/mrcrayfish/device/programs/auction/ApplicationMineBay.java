@@ -22,7 +22,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -83,7 +83,7 @@ public class ApplicationMineBay extends Application
 	}
 	
 	@Override
-	public void init(@Nullable NBTTagCompound intent)
+	public void init(@Nullable CompoundNBT intent)
 	{
 		getCurrentLayout().setBackground(new Background()
 		{
@@ -437,13 +437,13 @@ restoreDefaultLayout();
 	}
 
 	@Override
-	public void load(NBTTagCompound tagCompound)
+	public void load(CompoundNBT tagCompound)
 	{
 
 	}
 
 	@Override
-	public void save(NBTTagCompound tagCompound)
+	public void save(CompoundNBT tagCompound)
 	{
 
 	}

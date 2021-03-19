@@ -6,7 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class BrewingBox extends ContainerBox
 {

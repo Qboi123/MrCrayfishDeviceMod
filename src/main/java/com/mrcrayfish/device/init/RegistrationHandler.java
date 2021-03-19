@@ -1,7 +1,7 @@
 package com.mrcrayfish.device.init;
 
 import com.mrcrayfish.device.MrCrayfishDeviceMod;
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import com.mrcrayfish.device.item.SubItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -20,11 +20,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class RegistrationHandler
 {
-    @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+    @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
     public static class Blocks
     {
         private static final List<Block> BLOCKS = new LinkedList<>();
@@ -42,7 +42,7 @@ public class RegistrationHandler
         }
     }
 
-    @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+    @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
     public static class Items
     {
         private static final List<Item> ITEMS = new LinkedList<>();
@@ -60,7 +60,7 @@ public class RegistrationHandler
         }
     }
 
-    @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+    @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
     public static class Recipes
     {
         private static final List<IRecipe> RECIPES = new LinkedList<>();
@@ -78,7 +78,7 @@ public class RegistrationHandler
         }
     }
 
-    @Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Side.CLIENT)
+    @Mod.EventBusSubscriber(modid = Constants.MOD_ID, value = Side.CLIENT)
     public static class Models
     {
         @SubscribeEvent
@@ -100,7 +100,7 @@ public class RegistrationHandler
             }
             else
             {
-                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
+                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Constants.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
             }
         }
     }

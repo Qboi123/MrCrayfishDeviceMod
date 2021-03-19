@@ -9,7 +9,6 @@ import com.mrcrayfish.device.core.network.task.TaskGetDevices;
 import com.mrcrayfish.device.core.network.task.TaskPing;
 import com.mrcrayfish.device.core.print.task.TaskPrint;
 import com.mrcrayfish.device.core.task.TaskInstallApp;
-import com.mrcrayfish.device.entity.EntitySeat;
 import com.mrcrayfish.device.event.BankEvents;
 import com.mrcrayfish.device.event.EmailEvents;
 import com.mrcrayfish.device.gui.GuiHandler;
@@ -29,6 +28,7 @@ import com.mrcrayfish.device.programs.system.ApplicationFileBrowser;
 import com.mrcrayfish.device.programs.system.ApplicationSettings;
 import com.mrcrayfish.device.programs.system.task.*;
 import com.mrcrayfish.device.proxy.CommonProxy;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
@@ -42,31 +42,63 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.WORKING_MC_VERSION)
-public class MrCrayfishDeviceMod 
-{
-	@Instance(Reference.MOD_ID)
+@Mod(Constants.MOD_ID)
+public class MrCrayfishDeviceMod {
 	public static MrCrayfishDeviceMod instance;
-	
-	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.COMMON_PROXY_CLASS)
+
 	public static CommonProxy proxy;
 	
-	public static final CreativeTabs TAB_DEVICE = new DeviceTab("cdmTabDevice");
+	public static final DeviceGroup ITEM_GROUP = new DeviceGroup("cdmTabDevice");
 
-	private static Logger logger;
+	private static Logger LOGGER = LogManager.getLogger("DeviceMod");
 
 	public static final boolean DEVELOPER_MODE = true;
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) throws LaunchException
-	{
-		if(DEVELOPER_MODE && !(Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment"))
-		{
+	public MrCrayfishDeviceMod() {
+		// Tile Entity Registering
+		DeviceTileEntites.register();
+
+		// Packet Registering
+		PacketHandler.init();
+	}
+
+	public void isDeveloperMode() {
+		DEVELOPER_MODE;
+	}
+
+	public void isModDevEnvironment() {
+		if (isClientSide()) {
+			return Minecraft.getInstance().
+		}
+	}
+
+	public static boolean isClientSide() {
+		try {
+			Class.forName("net.minecraft.client.Minecraft");
+			return true;
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+	private boolean isModDevEnvironment0() {
+		try {
+			Class.forName("net.minecraftforge.userdev.LaunchTesting");
+			return true;
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+
+	public void commonSetup(FMLCommonSetupEvent event) throws LaunchException {
+		if(DEVELOPER_MODE && !(Boolean) event.get) {
 			throw new LaunchException();
 		}
-		logger = event.getModLog();
 
 		DeviceConfig.load(event.getSuggestedConfigurationFile());
 		MinecraftForge.EVENT_BUS.register(new DeviceConfig());
@@ -77,16 +109,7 @@ public class MrCrayfishDeviceMod
 	}
 	
 	@EventHandler
-	public void init(FMLInitializationEvent event) 
-	{
-		/* Tile Entity Registering */
-		DeviceTileEntites.register();
-
-		EntityRegistry.registerModEntity(new ResourceLocation("cdm:seat"), EntitySeat.class, "Seat", 0, this, 80, 1, false);
-
-		/* Packet Registering */
-		PacketHandler.init();
-
+	public void init(FMLCommonSetupEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
 		MinecraftForge.EVENT_BUS.register(new EmailEvents());
@@ -94,26 +117,25 @@ public class MrCrayfishDeviceMod
 
 		registerApplications();
 
-		proxy.init();
+		proxy.clientSetup();
 	}
 	
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) 
+	public void postInit(FMLLoadCompleteEvent event)
 	{
 		proxy.postInit();
 	}
 
-	private void registerApplications()
-	{
+	private void registerApplications() {
 		// Applications (Both)
-		ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "settings"), ApplicationSettings.class);
-		ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "bank"), ApplicationBank.class);
-		ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "file_browser"), ApplicationFileBrowser.class);
-		ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "gitweb"), ApplicationGitWeb.class);
-		ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "note_stash"), ApplicationNoteStash.class);
-		ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "pixel_painter"), ApplicationPixelPainter.class);
-		ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "ender_mail"), ApplicationEmail.class);
-		ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "app_store"), ApplicationAppStore.class);
+		ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "settings"), ApplicationSettings.class);
+		ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "bank"), ApplicationBank.class);
+		ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "file_browser"), ApplicationFileBrowser.class);
+		ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "gitweb"), ApplicationGitWeb.class);
+		ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "note_stash"), ApplicationNoteStash.class);
+		ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "pixel_painter"), ApplicationPixelPainter.class);
+		ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "ender_mail"), ApplicationEmail.class);
+		ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "app_store"), ApplicationAppStore.class);
 
 		// Core
 		TaskManager.registerTask(TaskInstallApp.class);
@@ -161,15 +183,15 @@ public class MrCrayfishDeviceMod
 		else
 		{
 			// Applications (Developers)
-			ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "example"), ApplicationExample.class);
-			ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "icons"), ApplicationIcons.class);
-			ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "text_area"), ApplicationTextArea.class);
-			ApplicationManager.registerApplication(new ResourceLocation(Reference.MOD_ID, "test"), ApplicationTest.class);
+			ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "example"), ApplicationExample.class);
+			ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "icons"), ApplicationIcons.class);
+			ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "text_area"), ApplicationTextArea.class);
+			ApplicationManager.registerApplication(new ResourceLocation(Constants.MOD_ID, "test"), ApplicationTest.class);
 
 			TaskManager.registerTask(TaskNotificationTest.class);
 		}
 
-		PrintingManager.registerPrint(new ResourceLocation(Reference.MOD_ID, "picture"), ApplicationPixelPainter.PicturePrint.class);
+		PrintingManager.registerPrint(new ResourceLocation(Constants.MOD_ID, "picture"), ApplicationPixelPainter.PicturePrint.class);
 	}
 
 	public static Logger getLogger()

@@ -1,26 +1,25 @@
 package com.mrcrayfish.device.recipe;
 
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import com.mrcrayfish.device.init.DeviceBlocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class RecipeCutPaper extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 {
     public RecipeCutPaper()
     {
-        this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "cut_paper"));
+        this.setRegistryName(new ResourceLocation(Constants.MOD_ID, "cut_paper"));
     }
 
     @Override
@@ -72,21 +71,21 @@ public class RecipeCutPaper extends net.minecraftforge.registries.IForgeRegistry
         {
             ItemStack result = new ItemStack(DeviceBlocks.PAPER);
 
-            NBTTagCompound tag = paper.getTagCompound();
-            if(!tag.hasKey("BlockEntityTag", Constants.NBT.TAG_COMPOUND))
+            CompoundNBT tag = paper.getTagCompound();
+            if(!tag.hasKey("BlockEntityTag", net.minecraftforge.common.util.Constants.NBT.TAG_COMPOUND))
             {
                 return ItemStack.EMPTY;
             }
 
-            NBTTagCompound blockTag = tag.getCompoundTag("BlockEntityTag");
-            if(!blockTag.hasKey("print", Constants.NBT.TAG_COMPOUND))
+            CompoundNBT blockTag = tag.getCompoundTag("BlockEntityTag");
+            if(!blockTag.hasKey("print", net.minecraftforge.common.util.Constants.NBT.TAG_COMPOUND))
             {
                 return ItemStack.EMPTY;
             }
 
-            NBTTagCompound printTag = blockTag.getCompoundTag("print");
-            NBTTagCompound data = printTag.getCompoundTag("data");
-            if(!data.hasKey("pixels", Constants.NBT.TAG_INT_ARRAY) || !data.hasKey("resolution", Constants.NBT.TAG_INT))
+            CompoundNBT printTag = blockTag.getCompoundTag("print");
+            CompoundNBT data = printTag.getCompoundTag("data");
+            if(!data.hasKey("pixels", net.minecraftforge.common.util.Constants.NBT.TAG_INT_ARRAY) || !data.hasKey("resolution", net.minecraftforge.common.util.Constants.NBT.TAG_INT))
             {
                 return ItemStack.EMPTY;
             }

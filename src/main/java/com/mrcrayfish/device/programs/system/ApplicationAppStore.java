@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import com.mrcrayfish.device.api.ApplicationManager;
 import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.Icons;
@@ -25,7 +25,7 @@ import com.mrcrayfish.device.programs.system.object.AppEntry;
 import com.mrcrayfish.device.programs.system.object.RemoteEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
@@ -47,7 +47,7 @@ public class ApplicationAppStore extends SystemApplication
 	public List<AppEntry> certifiedApps = new ArrayList<>();
 
 	@Override
-	public void init(@Nullable NBTTagCompound intent)
+	public void init(@Nullable CompoundNBT intent)
 	{
 		layoutMain = new Layout(LAYOUT_WIDTH, LAYOUT_HEIGHT);
 
@@ -68,7 +68,7 @@ public class ApplicationAppStore extends SystemApplication
         });
 
 		Image imageBanner = new Image(0, 0, LAYOUT_WIDTH, 60);
-		imageBanner.setImage(new ResourceLocation(Reference.MOD_ID, "textures/gui/app_market_background.png"));
+		imageBanner.setImage(new ResourceLocation(Constants.MOD_ID, "textures/gui/app_market_background.png"));
 		imageBanner.setDrawFull(true);
 		homePageLayout.addComponent(imageBanner);
 
@@ -146,13 +146,13 @@ public class ApplicationAppStore extends SystemApplication
 	}
 
 	@Override
-	public void load(NBTTagCompound tagCompound) 
+	public void load(CompoundNBT tagCompound) 
 	{
 		
 	}
 
 	@Override
-	public void save(NBTTagCompound tagCompound) 
+	public void save(CompoundNBT tagCompound) 
 	{
 		
 	}

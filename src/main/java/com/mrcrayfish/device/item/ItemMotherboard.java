@@ -3,7 +3,7 @@ package com.mrcrayfish.device.item;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ItemMotherboard extends ItemComponent
 {
@@ -24,7 +24,7 @@ public class ItemMotherboard extends ItemComponent
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         if(!GuiScreen.isShiftKeyDown())
         {
             tooltip.add("CPU: " + getComponentStatus(tag, "cpu"));
@@ -42,11 +42,11 @@ public class ItemMotherboard extends ItemComponent
         }
     }
 
-    private String getComponentStatus(NBTTagCompound tag, String component)
+    private String getComponentStatus(CompoundNBT tag, String component)
     {
         if(tag != null && tag.hasKey("components", Constants.NBT.TAG_COMPOUND))
         {
-            NBTTagCompound components = tag.getCompoundTag("components");
+            CompoundNBT components = tag.getCompoundTag("components");
             if(components.hasKey(component, Constants.NBT.TAG_BYTE))
             {
                 return TextFormatting.GREEN + "Added";

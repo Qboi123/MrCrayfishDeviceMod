@@ -18,7 +18,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class Palette extends Component
 {

@@ -2,7 +2,7 @@ package com.mrcrayfish.device.event;
 
 import com.mrcrayfish.device.api.utils.BankUtil;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,7 +25,7 @@ public class BankEvents
 					return;
 				}
 				
-				NBTTagCompound nbt = CompressedStreamTools.read(data);
+				CompoundNBT nbt = CompressedStreamTools.read(data);
 				if(nbt != null)
 				{
 					BankUtil.INSTANCE.load(nbt);
@@ -51,7 +51,7 @@ public class BankEvents
 					data.createNewFile();
 				}
 				
-				NBTTagCompound nbt = new NBTTagCompound();
+				CompoundNBT nbt = new CompoundNBT();
 				BankUtil.INSTANCE.save(nbt);
 				CompressedStreamTools.write(nbt, data);
 			} 

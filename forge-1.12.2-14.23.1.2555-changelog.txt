@@ -627,7 +627,7 @@ Build 1.12-14.21.1.2405:
 
 Build 1.12-14.21.1.2404:
 	williewillus: Allow advancement icons to have nbt (#4114)
-	maxanier: Adjust EnumHelper#addCreatureType to EnumType (#4089)
+	maxanier: Adjust Helper#addCreatureType to Type (#4089)
 
 Build 1.12-14.21.1.2403:
 	LexManos:
@@ -1205,7 +1205,7 @@ Build 1.11.2-13.20.0.2271:
 		is saved and loaded from NBT, and is called updateBlocked. Modders are
 		responsible for managing this flag for entities they with to 'freeze' or
 		'unfreeze'.
-	Choonster.2010: Add EnumHand and ItemStack to BonemealEvent (#3736)
+	Choonster.2010: Add Hand and ItemStack to BonemealEvent (#3736)
 
 Build 1.11.2-13.20.0.2270:
 	egabriel: Fix EntityFallingBlock check for ITileEntityProvider (#3711)
@@ -1490,7 +1490,7 @@ Build 1.10.2-12.18.3.2215:
 Build 1.11.2-13.20.0.2214:
 	Choonster.2010:
 		Fix Biome#getSpawnableList returning an empty list for non-vanilla
-		EnumCreatureTypes (#3611)
+		CreatureTypes (#3611)
 
 Build 1.11.2-13.20.0.2213:
 	williewillus: Skip first baking in ModelLoader (#3621)
@@ -1859,7 +1859,7 @@ Build 1.10.2-12.18.2.2147:
 	LexManos: Make Wither Skulls respect Block.canEntityDestroy. Closes #3404
 
 Build 1.11-13.19.0.2146:
-	Bartek_s2: Added EnumHand parameter to Block.getStateForPlacement (#3402)
+	Bartek_s2: Added Hand parameter to Block.getStateForPlacement (#3402)
 
 Build 1.11-13.19.0.2145:
 	LexManos:
@@ -2639,7 +2639,7 @@ Build 1.9.4-12.17.0.1975:
 	shadowfacts: Fix broken EntityItem merging for Items with capabilities
 	diesieben07:
 		Make ASMDataTable more useful: (#2911)
-		- EnumHolder now has getters for it's data
+		- Holder now has getters for it's data
 		- enum arrays work now
 		- nested annotations work now outside of being in arrays
 		(cherry picked from commit f10f750)
@@ -2647,7 +2647,7 @@ Build 1.9.4-12.17.0.1975:
 Build 1.9.4-12.17.0.1974-1.9.4:
 	diesieben07:
 		Make ASMDataTable more useful: (#2911)
-		- EnumHolder now has getters for it's data
+		- Holder now has getters for it's data
 		- enum arrays work now
 		- nested annotations work now outside of being in arrays
 
@@ -2829,7 +2829,7 @@ Build 1.9.4-12.17.0.1937:
 	cpw: Fix schizophrenia in version numbers.
 	LexManos: Bump version information for 1.9.4.
 	LexManos: Update example mod for new mappings.
-	atomicblom: Add Unit Test to detect mismatches between EnumHelper and Enum ctor
+	atomicblom: Add Unit Test to detect mismatches between Helper and  ctor
 	cpw:
 		Tweak build file slightly - allow passing buildNumber using gradle
 		parameters (-PbuildNumber=...) and provide a "resetBuildNumber" function
@@ -2851,7 +2851,7 @@ Build 1.9.4-12.17.0.1937:
 	LexManos: Add alternative ItemAxe Constructor
 	LexManos: Fix paramters for addArmorMaterial, addOption and addGameType.
 	LexManos:
-		Make unit test for EnumHelper more robust and less spammy. Now detects
+		Make unit test for Helper more robust and less spammy. Now detects
 		missing accessors as well.
 	the.f1repl4ce: Switch new constructor to use floats (#2904)
 	tterrag1098: Add hook for TE data sync on client (#2893)
@@ -2990,9 +2990,9 @@ Build 1.9.4-12.17.0.1921-1.9.4:
 	the.f1repl4ce: Switch new constructor to use floats (#2904)
 
 Build 1.9.4-12.17.0.1920-1.9.4:
-	atomicblom: Add Unit Test to detect mismatches between EnumHelper and Enum ctor
+	atomicblom: Add Unit Test to detect mismatches between Helper and  ctor
 	LexManos: Fix paramters for addArmorMaterial, addOption and addGameType.
-	LexManos: Make unit test for EnumHelper more robust and less spammy. Now detects missing accessors as well.
+	LexManos: Make unit test for Helper more robust and less spammy. Now detects missing accessors as well.
 
 Build 1.9.4-12.17.0.1918-1.9.4:
 	LexManos: Add alternative ItemAxe Constructor
@@ -3209,7 +3209,7 @@ Build 1.9-12.16.0.1886:
 	LexManos: Fix digging blocks in survival.
 	LexManos: Fixed breaking of tall grass. It now uses fortune. Expanded grass seed hooks to allow Fortune. Potentially removing in future in favor of LootTables.
 	vazkii:
-		1.9: Fixed registering armor materials through EnumHelper exploding
+		1.9: Fixed registering armor materials through Helper exploding
 		
 		1.9 ArmorMaterial now requires a SoundEvent for the equip sound.
 	fry: Fixed model error reporting, fixed model errors in test mods that shouldn't happen, fixed custom texture loading, made more things private/final.
@@ -4550,7 +4550,7 @@ Build 1.8.8-11.15.0.1655:
 	fry: Updated various rendering-related patches and classes to 1.8.8; forge still uses vecmath.
 	fry: Fix generics and error in the BlockState patch.
 	fry: FontRenderer + Item patch update; WorldVertexBufferUploader patch derp fix.
-	fry: IntegratedServer, World, EnumChatFormatting and EnumFacing
+	fry: IntegratedServer, World, ChatFormatting and Direction
 	fry: WorldProvider, WorldType, WorldServer, WorldServerMulti
 	fry: EntityAIAttackOnCollide, ServerStatusResponse, MinecraftServer, NetHandlerLoginServer, Vec3, BiomeGenBase, AnvilChunkLoader, ChunkProviderServer, MapGenRavine, MinecraftServer updated; fix in Block, GuiIngameForge; can load the world and play with ~20 more manual error fixes.
 	fry: BlockOre, BlockRotatedPillar, SoundManager, EntityPlayerSP, GuiScreen, GuiAchievements, GuiContainer, BlockModelRenderer, ContainerEnchantment, Slot updated manually and imports removed; GitSlot patch updated.
@@ -5325,7 +5325,7 @@ Build 1.8-11.14.3.1499:
 	glstillman: Fixed a bug with ExtendedBlockStates containing at least one IProperty and one IUnlistedProperty not allowing blocks to be placed.
 
 Build 1.8-11.14.3.1498:
-	liach: Add an EnumHelper hook and fixed an issue
+	liach: Add an Helper hook and fixed an issue
 
 Build 1.8-11.14.3.1497:
 	simonbarnes1: Fix placing signs with NBT prompting for text
@@ -5339,7 +5339,7 @@ Build 1.8-11.14.3.1495:
 	clienthax: Signed-off-by: Clienthax <clienthax@gmail.com>
 
 Build 1.8-11.14.3.1494:
-	rubensworks: Make EnumFacing events available server-side
+	rubensworks: Make Direction events available server-side
 
 Build 1.8-11.14.3.1493:
 	rubensworks: Fix source block check for BlockFluidClassic
@@ -5951,7 +5951,7 @@ Build 1.8-11.14.1.1397:
 	Parker Young: Fixes MC-52974: Host's skin doesn't load in LAN
 
 Build 1.8-11.14.1.1396:
-	Zaggy1024: Removed @SideOnly(Side.CLIENT) from EnumWorldBlockLayer.
+	Zaggy1024: Removed @SideOnly(Side.CLIENT) from WorldBlockLayer.
 
 Build 1.7.10-10.13.3.1395-1710ls:
 	cpw: MinecraftForge/FML@94821fac98e64d9b8ad7434ed23a621850a8e11c Add a config file that lets you add additional soft dependencies at runtime - injectedDependencies.json
@@ -6385,9 +6385,9 @@ Build 1.8-11.14.1.1318:
 
 Build 1.8-11.14.1.1317:
 	Parker Young:
-		Added ATs for EnumFacing
+		Added ATs for Direction
 		
-		This publics the VALUES array and HORIZONTALS array in EnumFacing, thus giving modders access to these arrays, much like ForgeDirection had.
+		This publics the VALUES array and HORIZONTALS array in Direction, thus giving modders access to these arrays, much like ForgeDirection had.
 
 Build 1.8-11.14.1.1316:
 	fry: Attributes.put (de)normalization now works as intended
@@ -6459,7 +6459,7 @@ Build 1.8-11.14.0.1296:
 		
 		Some notes:
 		Almost all int x, int y, int z parameters have been changed to BlockPos class
-		ForgeDirection has been removed, replaced by net.minecraft.util.EnumFacing.
+		ForgeDirection has been removed, replaced by net.minecraft.util.Direction.
 		All FML classes have moved from packet cpw.mods.fml to net.minecraftforge.fml
 		Fluid Rendering has been disabled for the time being, to be re-evaulated and a test mod created for it.
 		Minecraft now uses a Model based system for rendering blocks and Items. The intention is to expand the model format to better suit modder's needed once it is evaulated.
@@ -6517,7 +6517,7 @@ Build 1.8-11.14.0.1296:
 	LexManos: Fix missed patch causing Dispensed Armor to go into the wrong slot. Closes #1560
 	LexManos: Fixed log spam when breaking DoublePlants. Closes #1555
 	LexManos: Fix texture stitcher not using all avalible spaces.
-	LexManos: Fix EnumHelper for new ArmorTexture argument.
+	LexManos: Fix Helper for new ArmorTexture argument.
 	LexManos: Untie ItemModelMesher from using Item Ids internally by implementing our own simple mechanics using Trove.
 	LexManos: Fix userdev for new BlockState change.
 	LexManos: MinecraftForge/FML@e3785c28930a218cf9374458c67c34e7fba17922 Ensure that EntitySpawn and OpenGUI packets are handled in the world thread. Also log all errors that are thrown in FutureTasks.
@@ -6716,7 +6716,7 @@ Build 1.8-11.14.0.1266-1.8:
 
 Build 1.8-11.14.0.1265-1.8:
 	LexManos: Fix texture stitcher not using all avalible spaces.
-	LexManos: Fix EnumHelper for new ArmorTexture argument.
+	LexManos: Fix Helper for new ArmorTexture argument.
 
 Build 1.7.10-10.13.2.1264:
 	LexManos: Fix texture stitcher not using all avalible spaces. Closes #1557
@@ -7560,7 +7560,7 @@ Build 1.7.2-10.12.1.1100:
 	vilim.lendvaj: Make finite fluid blocks drainable
 
 Build 1.7.2-10.12.1.1099:
-	LexManos: Fix enum helpers for EnumRarity {moved to Commn and changed paramter} and EnumCreatureType {new parameter} and added junit test for them. Closes #1009
+	LexManos: Fix enum helpers for Rarity {moved to Commn and changed paramter} and CreatureType {new parameter} and added junit test for them. Closes #1009
 
 Build 1.7.2-10.12.1.1098:
 	Christian: MinecraftForge/FML@1d41aa978d41267e4040ec449e10f49a20edd4fa Fix the side for the compatibility check. Should result in green ticks finally!
@@ -8216,7 +8216,7 @@ Build 1.7.2-10.12.0.967:
 		Updated FML:
 		MinecraftForge/FML@a30f17362764f3e4e594386e193f9e4368e6836e Add sonatype snapshots repo for SpecialSource snapshots.
 		MinecraftForge/FML@b2550b8a693315ccc205f5315eac67c5283d7af9 Add mappings for Items/Blocks fields.
-		MinecraftForge/FML@57f7f1d7abd304d3e9f42567f1d66c10122e4ec6 Update for fixed Enum cleaning and names.
+		MinecraftForge/FML@57f7f1d7abd304d3e9f42567f1d66c10122e4ec6 Update for fixed  cleaning and names.
 		MinecraftForge/FML@99c681ad8736e4976053718c3d453b2fb30eefe0 Did it manually, forgot it needed the end comma
 	LexManos:
 		Updated FML:
@@ -9985,7 +9985,7 @@ Build 1.5.1-7.7.1.631:
 
 Build 1.5.1-7.7.1.630:
 	LexManos: Updated FML: MinecraftForge/FML@570faeb790745c35403c67fabab57651b71da576 Added the ability to save transformed classes to disc for debugging.
-	LexManos: Add checking for 'ENUM$VALUES' in EnumHelper. Eclipse uses it's own internal compiler which does not follow the java standard of making the values field names $VALUES and private. Instead its public and ENUM$VALUES. Closes #502
+	LexManos: Add checking for 'ENUM$VALUES' in Helper. Eclipse uses it's own internal compiler which does not follow the java standard of making the values field names $VALUES and private. Instead its public and ENUM$VALUES. Closes #502
 
 Build 1.5.1-7.7.1.629:
 	LexManos: Revert MinecraftForge/MinecraftForge@f594109b30c87f5a0996eee9e8c4513380733cee If concurancy issues arise we will reassess. The provided solution caused entities to be removed incorrectly and cause 'invisible' entities client side.
@@ -10274,7 +10274,7 @@ Build 1.5-7.7.0.575:
 	LexManos: Fix missed wildcard change in OreDictionary closes #448
 
 Build 1.5-7.7.0.574:
-	LexManos: Fix crash when EnumHelper can't find $VALUES field, log info, and return gracefully.
+	LexManos: Fix crash when Helper can't find $VALUES field, log info, and return gracefully.
 
 Build 1.5-7.7.0.573:
 	Christian:
@@ -12295,7 +12295,7 @@ Build 4.0.0.220:
 		Fix up dispenser handling, add in new params for the dispenser: breaks IDispenseHandler, sorry
 	Christian:
 		Update FML: 28a10ac
-		28a10ac Null protection for ticks() -- probably should uses EnumSet.noneOf() but you can also use null now to stop ticking. closes #77
+		28a10ac Null protection for ticks() -- probably should uses Set.noneOf() but you can also use null now to stop ticking. closes #77
 		c349d51 Automatic mod entity registration into the global entity list. This might break entity code out there, sorry, but this way for most entities you no longer need to manage the global mod entity stuff at all. just remove it. FML will take care of the rest (note, worlds won't load the old entities)
 		ef01745 Add in a utility function that *might* tell you the context you're running in on either client or server: FMLCommonHandler.getEffectiveSide
 		c97d6a6 Try and stop sendPacketToAllAround from being crashy
@@ -12502,7 +12502,7 @@ Build 4.0.0.172:
 		Implemented version storage
 		Added basic dummy FML mod container to remove the need for mod metadata file
 		Added beggining work on Forge event system
-		Updated and moved EnumHelper
+		Updated and moved Helper
 	LexManos: Updated update_patches.py, and made first patch!
 	LexManos: Moved paulscode to new client folder
 	LexManos: First push of some small patches and introduction of basic events. As well as the first cases for Forge's Access Transformer

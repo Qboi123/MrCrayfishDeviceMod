@@ -2,8 +2,7 @@ package com.mrcrayfish.device.block;
 
 import com.mrcrayfish.device.MrCrayfishDeviceMod;
 import com.mrcrayfish.device.object.Bounds;
-import com.mrcrayfish.device.tileentity.TileEntityPrinter;
-import com.mrcrayfish.device.util.IColored;
+import com.mrcrayfish.device.tileentity.PrinterTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -11,8 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -22,9 +21,9 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
-public class BlockPrinter extends BlockDevice.Colored
+public class PrinterBlock extends DeviceBlock.Colored
 {
     private static final AxisAlignedBB[] BODY_BOUNDING_BOX = new Bounds(5 * 0.0625, 0.0, 1 * 0.0625, 14 * 0.0625, 5 * 0.0625, 15 * 0.0625).getRotatedBounds();
     private static final AxisAlignedBB[] TRAY_BOUNDING_BOX = new Bounds(0.5 * 0.0625, 0.0, 3.5 * 0.0625, 5 * 0.0625, 1 * 0.0625, 12.5 * 0.0625).getRotatedBounds();
@@ -32,11 +31,11 @@ public class BlockPrinter extends BlockDevice.Colored
 
     private static final AxisAlignedBB SELECTION_BOUNDING_BOX = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.5, 1.0);
 
-    public BlockPrinter()
+    public PrinterBlock()
     {
         super(Material.ANVIL);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-        this.setCreativeTab(MrCrayfishDeviceMod.TAB_DEVICE);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, Direction.NORTH));
+        this.setCreativeTab(MrCrayfishDeviceMod.ITEM_GROUP);
         this.setUnlocalizedName("printer");
         this.setRegistryName("printer");
     }
@@ -50,20 +49,20 @@ public class BlockPrinter extends BlockDevice.Colored
     @Override
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean p_185477_7_)
     {
-        EnumFacing facing = state.getValue(FACING);
+        Direction facing = state.getValue(FACING);
         Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, BODY_BOUNDING_BOX[facing.getHorizontalIndex()]);
         Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, TRAY_BOUNDING_BOX[facing.getHorizontalIndex()]);
         Block.addCollisionBoxToList(pos, entityBox, collidingBoxes, PAPER_BOUNDING_BOX[facing.getHorizontalIndex()]);
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ)
     {
         ItemStack heldItem = playerIn.getHeldItem(hand);
         TileEntity tileEntity = worldIn.getTileEntity(pos);
-        if(tileEntity instanceof TileEntityPrinter)
+        if(tileEntity instanceof PrinterTileEntity)
         {
-            if(((TileEntityPrinter) tileEntity).addPaper(heldItem, playerIn.isSneaking()))
+            if(((PrinterTileEntity) tileEntity).addPaper(heldItem, playerIn.isSneaking()))
             {
                 return true;
             }
@@ -75,6 +74,6 @@ public class BlockPrinter extends BlockDevice.Colored
     @Override
     public TileEntity createTileEntity(World world, IBlockState state)
     {
-        return new TileEntityPrinter();
+        return new PrinterTileEntity();
     }
 }

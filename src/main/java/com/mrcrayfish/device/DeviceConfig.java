@@ -1,8 +1,7 @@
 package com.mrcrayfish.device;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -10,7 +9,7 @@ import java.io.File;
 
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class DeviceConfig
 {
@@ -57,21 +56,21 @@ public class DeviceConfig
         config.save();
     }
 
-    public static void readSyncTag(NBTTagCompound tag)
+    public static void readSyncTag(CompoundNBT tag)
     {
-        if(tag.hasKey("pingRate", Constants.NBT.TAG_INT))
+        if(tag.hasKey("pingRate", net.minecraftforge.common.util.Constants.NBT.TAG_INT))
         {
             pingRate = tag.getInteger("pingRate");
         }
-        if(tag.hasKey("signalRange", Constants.NBT.TAG_INT))
+        if(tag.hasKey("signalRange", net.minecraftforge.common.util.Constants.NBT.TAG_INT))
         {
             signalRange = tag.getInteger("signalRange");
         }
     }
 
-    public static NBTTagCompound writeSyncTag()
+    public static CompoundNBT writeSyncTag()
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setInteger("pingRate", pingRate);
         tag.setInteger("signalRange", signalRange);
         return tag;
@@ -85,7 +84,7 @@ public class DeviceConfig
     @SubscribeEvent
     public void onConfigChange(ConfigChangedEvent.OnConfigChangedEvent event)
     {
-        if(event.getModID().equals(Reference.MOD_ID))
+        if(event.getModID().equals(Constants.MOD_ID))
         {
             init();
         }

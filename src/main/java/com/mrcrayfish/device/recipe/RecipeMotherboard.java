@@ -1,27 +1,24 @@
 package com.mrcrayfish.device.recipe;
 
-import com.mrcrayfish.device.Reference;
-import com.mrcrayfish.device.init.DeviceBlocks;
+import com.mrcrayfish.device.Constants;
 import com.mrcrayfish.device.init.DeviceItems;
 import com.mrcrayfish.device.item.ItemMotherboard;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class RecipeMotherboard extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 {
     public RecipeMotherboard()
     {
-        this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "motherboard_components"));
+        this.setRegistryName(new ResourceLocation(Constants.MOD_ID, "motherboard_components"));
     }
 
     @Override
@@ -89,11 +86,11 @@ public class RecipeMotherboard extends net.minecraftforge.registries.IForgeRegis
 
         if(!motherboard.isEmpty() && !component.isEmpty())
         {
-            NBTTagCompound originalTag = motherboard.getTagCompound();
-            if(originalTag != null && originalTag.hasKey("components", Constants.NBT.TAG_COMPOUND))
+            CompoundNBT originalTag = motherboard.getTagCompound();
+            if(originalTag != null && originalTag.hasKey("components", net.minecraftforge.common.util.Constants.NBT.TAG_COMPOUND))
             {
-                NBTTagCompound tag = originalTag.getCompoundTag("components");
-                if(tag.hasKey(component.getUnlocalizedName().substring(5), Constants.NBT.TAG_BYTE))
+                CompoundNBT tag = originalTag.getCompoundTag("components");
+                if(tag.hasKey(component.getUnlocalizedName().substring(5), net.minecraftforge.common.util.Constants.NBT.TAG_BYTE))
                 {
                     return null;
                 }
@@ -102,18 +99,18 @@ public class RecipeMotherboard extends net.minecraftforge.registries.IForgeRegis
             ItemStack result = motherboard.copy();
             if(!result.hasTagCompound())
             {
-                result.setTagCompound(new NBTTagCompound());
+                result.setTagCompound(new CompoundNBT());
             }
 
-            NBTTagCompound itemTag = result.getTagCompound();
+            CompoundNBT itemTag = result.getTagCompound();
             if(itemTag != null)
             {
-                if(!itemTag.hasKey("components", Constants.NBT.TAG_COMPOUND))
+                if(!itemTag.hasKey("components", net.minecraftforge.common.util.Constants.NBT.TAG_COMPOUND))
                 {
-                    itemTag.setTag("components", new NBTTagCompound());
+                    itemTag.setTag("components", new CompoundNBT());
                 }
 
-                NBTTagCompound components = itemTag.getCompoundTag("components");
+                CompoundNBT components = itemTag.getCompoundTag("components");
                 components.setByte(component.getUnlocalizedName().substring(5), (byte) 0);
                 return result;
             }

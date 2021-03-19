@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public enum Alphabet implements IIcon
 {

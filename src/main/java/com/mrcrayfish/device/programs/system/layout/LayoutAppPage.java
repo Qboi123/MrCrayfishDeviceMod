@@ -29,7 +29,7 @@ import java.net.URL;
 import java.util.Arrays;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class LayoutAppPage extends Layout
 {

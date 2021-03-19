@@ -2,13 +2,13 @@ package com.mrcrayfish.device.programs.email.object;
 
 import com.mrcrayfish.device.api.io.File;
 import com.mrcrayfish.device.programs.email.ApplicationEmail;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class Email
 {
@@ -65,7 +65,7 @@ public class Email
         this.read = read;
     }
 
-    public void writeToNBT(NBTTagCompound nbt)
+    public void writeToNBT(CompoundNBT nbt)
     {
         nbt.setString("subject", this.subject);
         if(author != null) nbt.setString("author", this.author);
@@ -74,19 +74,19 @@ public class Email
 
         if(attachment != null)
         {
-            NBTTagCompound fileTag = new NBTTagCompound();
+            CompoundNBT fileTag = new CompoundNBT();
             fileTag.setString("file_name", attachment.getName());
             fileTag.setTag("data", attachment.toTag());
             nbt.setTag("attachment", fileTag);
         }
     }
 
-    public static Email readFromNBT(NBTTagCompound nbt)
+    public static Email readFromNBT(CompoundNBT nbt)
     {
         File attachment = null;
         if(nbt.hasKey("attachment", Constants.NBT.TAG_COMPOUND))
         {
-            NBTTagCompound fileTag = nbt.getCompoundTag("attachment");
+            CompoundNBT fileTag = nbt.getCompoundTag("attachment");
             attachment = File.fromTag(fileTag.getString("file_name"), fileTag.getCompoundTag("data"));
         }
         Email email = new Email(nbt.getString("subject"), nbt.getString("author"), nbt.getString("message"), attachment);

@@ -18,7 +18,7 @@ import net.minecraft.client.model.ModelVillager;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
@@ -77,7 +77,7 @@ public class ApplicationBank extends SystemApplication
 	}
 	
 	@Override
-	public void init(@Nullable NBTTagCompound intent)
+	public void init(@Nullable CompoundNBT intent)
 	{
 		layoutStart = new Layout();
 		layoutStart.setBackground((gui, mc, x, y, width, height, mouseX, mouseY, windowActive) ->
@@ -286,24 +286,24 @@ public class ApplicationBank extends SystemApplication
         });
 	}
 
-	private void deposit(int amount, Callback<NBTTagCompound> callback)
+	private void deposit(int amount, Callback<CompoundNBT> callback)
 	{
 		TaskManager.sendTask(new TaskDeposit(amount).setCallback(callback));
 	}
 	
-	private void withdraw(int amount, Callback<NBTTagCompound> callback)
+	private void withdraw(int amount, Callback<CompoundNBT> callback)
 	{
 		TaskManager.sendTask(new TaskWithdraw(amount).setCallback(callback));
 	}
 
 	@Override
-	public void load(NBTTagCompound tagCompound)
+	public void load(CompoundNBT tagCompound)
 	{
 		
 	}
 
 	@Override
-	public void save(NBTTagCompound tagCompound)
+	public void save(CompoundNBT tagCompound)
 	{
 		
 	}

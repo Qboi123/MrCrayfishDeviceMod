@@ -4,7 +4,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public interface SubItems
 {

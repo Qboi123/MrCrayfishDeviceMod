@@ -1,24 +1,24 @@
 package com.mrcrayfish.device.recipe;
 
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import com.mrcrayfish.device.init.DeviceBlocks;
 import com.mrcrayfish.device.init.DeviceItems;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class RecipeLaptop extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 {
     public RecipeLaptop()
     {
-        this.setRegistryName(new ResourceLocation(Reference.MOD_ID, "laptop"));
+        this.setRegistryName(new ResourceLocation(Constants.MOD_ID, "laptop"));
     }
 
     @Override
@@ -52,10 +52,10 @@ public class RecipeLaptop extends net.minecraftforge.registries.IForgeRegistryEn
             return false;
 
         ItemStack motherboard = inv.getStackInSlot(4);
-        NBTTagCompound tag = motherboard.getTagCompound();
+        CompoundNBT tag = motherboard.getTagCompound();
         if(tag != null)
         {
-            NBTTagCompound components = tag.getCompoundTag("components");
+            CompoundNBT components = tag.getCompoundTag("components");
             return components.hasKey("cpu") && components.hasKey("ram") && components.hasKey("gpu") && components.hasKey("wifi");
         }
         return false;

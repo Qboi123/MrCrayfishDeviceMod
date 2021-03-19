@@ -3,6 +3,8 @@ package com.mrcrayfish.device.api.print;
 import com.google.common.collect.HashBiMap;
 import com.mrcrayfish.device.MrCrayfishDeviceMod;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -11,14 +13,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
+@SuppressWarnings("FieldMayBeFinal")
 public class PrintingManager
 {
     private static HashBiMap<String, Class<? extends IPrint>> registeredPrints = HashBiMap.create();
 
-    @SideOnly(Side.CLIENT)
-    private static Map<String, IPrint.Renderer> registeredRenders;
+    public static Map<String, IPrint.Renderer> registeredRenders;
 
     public static void registerPrint(ResourceLocation identifier, Class<? extends IPrint> classPrint)
     {
@@ -68,14 +70,14 @@ public class PrintingManager
         return null;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static IPrint.Renderer getRenderer(IPrint print)
     {
         String id = getPrintIdentifier(print);
         return registeredRenders.get(id);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static IPrint.Renderer getRenderer(String identifier)
     {
         return registeredRenders.get(identifier);

@@ -4,7 +4,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class AnvilBox extends ContainerBox
 {

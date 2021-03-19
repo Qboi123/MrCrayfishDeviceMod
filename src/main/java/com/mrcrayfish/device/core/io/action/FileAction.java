@@ -2,34 +2,34 @@ package com.mrcrayfish.device.core.io.action;
 
 import com.mrcrayfish.device.api.io.File;
 import com.mrcrayfish.device.api.io.Folder;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class FileAction
 {
     private Type type;
-    private NBTTagCompound data;
+    private CompoundNBT data;
 
-    private FileAction(Type type, NBTTagCompound data)
+    private FileAction(Type type, CompoundNBT data)
     {
         this.type = type;
         this.data = data;
     }
 
-    public NBTTagCompound toTag()
+    public CompoundNBT toTag()
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setInteger("type", type.ordinal());
         tag.setTag("data", data);
         return tag;
     }
 
-    public static FileAction fromTag(NBTTagCompound tag)
+    public static FileAction fromTag(CompoundNBT tag)
     {
         Type type = Type.values()[tag.getInteger("type")];
-        NBTTagCompound data = tag.getCompoundTag("data");
+        CompoundNBT data = tag.getCompoundTag("data");
         return new FileAction(type, data);
     }
 
@@ -38,7 +38,7 @@ public class FileAction
         return type;
     }
 
-    public NBTTagCompound getData()
+    public CompoundNBT getData()
     {
         return data;
     }
@@ -52,7 +52,7 @@ public class FileAction
     {
         public static FileAction makeNew(Folder parent, File file, boolean override)
         {
-            NBTTagCompound vars = new NBTTagCompound();
+            CompoundNBT vars = new CompoundNBT();
             vars.setString("directory", parent.getPath());
             vars.setString("file_name", file.getName());
             vars.setBoolean("override", override);
@@ -62,7 +62,7 @@ public class FileAction
 
         public static FileAction makeDelete(File file)
         {
-            NBTTagCompound vars = new NBTTagCompound();
+            CompoundNBT vars = new CompoundNBT();
             vars.setString("directory", file.getLocation());
             vars.setString("file_name", file.getName());
             return new FileAction(Type.DELETE, vars);
@@ -70,16 +70,16 @@ public class FileAction
 
         public static FileAction makeRename(File file, String newFileName)
         {
-            NBTTagCompound vars = new NBTTagCompound();
+            CompoundNBT vars = new CompoundNBT();
             vars.setString("directory", file.getLocation());
             vars.setString("file_name", file.getName());
             vars.setString("new_file_name", newFileName);
             return new FileAction(Type.RENAME, vars);
         }
 
-        public static FileAction makeData(File file, NBTTagCompound data)
+        public static FileAction makeData(File file, CompoundNBT data)
         {
-            NBTTagCompound vars = new NBTTagCompound();
+            CompoundNBT vars = new CompoundNBT();
             vars.setString("directory", file.getLocation());
             vars.setString("file_name", file.getName());
             vars.setTag("data", data);
@@ -88,7 +88,7 @@ public class FileAction
 
         public static FileAction makeCopyCut(File source, Folder destination, boolean override, boolean cut)
         {
-            NBTTagCompound vars = new NBTTagCompound();
+            CompoundNBT vars = new CompoundNBT();
             vars.setString("directory", source.getLocation());
             vars.setString("file_name", source.getName());
             vars.setString("destination_drive", destination.getDrive().getUUID().toString());

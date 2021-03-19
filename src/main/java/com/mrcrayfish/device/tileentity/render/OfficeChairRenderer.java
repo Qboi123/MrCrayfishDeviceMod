@@ -1,8 +1,8 @@
 package com.mrcrayfish.device.tileentity.render;
 
-import com.mrcrayfish.device.block.BlockOfficeChair;
+import com.mrcrayfish.device.block.OfficeChairBlock;
 import com.mrcrayfish.device.init.DeviceBlocks;
-import com.mrcrayfish.device.tileentity.TileEntityOfficeChair;
+import com.mrcrayfish.device.tileentity.OfficeChairTileEntity;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -13,18 +13,18 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
-public class OfficeChairRenderer extends TileEntitySpecialRenderer<TileEntityOfficeChair>
+public class OfficeChairRenderer extends TileEntitySpecialRenderer<OfficeChairTileEntity>
 {
     private Minecraft mc = Minecraft.getMinecraft();
 
     @Override
-    public void render(TileEntityOfficeChair te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+    public void render(OfficeChairTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         BlockPos pos = te.getPos();
         IBlockState tempState = te.getWorld().getBlockState(pos);
@@ -41,7 +41,7 @@ public class OfficeChairRenderer extends TileEntitySpecialRenderer<TileEntityOff
             GlStateManager.rotate(-te.getRotation(), 0, 1, 0);
             GlStateManager.translate(-0.5, 0, -0.5);
 
-            IBlockState state = tempState.getBlock().getActualState(tempState, te.getWorld(), pos).withProperty(BlockOfficeChair.FACING, EnumFacing.NORTH).withProperty(BlockOfficeChair.TYPE, BlockOfficeChair.Type.SEAT);
+            IBlockState state = tempState.getBlock().getActualState(tempState, te.getWorld(), pos).withProperty(OfficeChairBlock.FACING, Direction.NORTH).withProperty(OfficeChairBlock.TYPE, OfficeChairBlock.Type.SEAT);
 
             GlStateManager.disableLighting();
             GlStateManager.enableTexture2D();

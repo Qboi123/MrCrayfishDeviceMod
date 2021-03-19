@@ -15,13 +15,13 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.awt.*;
 import java.util.Map;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class DownloadModule extends Module
 {
@@ -83,7 +83,7 @@ public class DownloadModule extends Module
         {
             try
             {
-                NBTTagCompound tag = JsonToNBT.getTagFromJson(data.get("file-data"));
+                CompoundNBT tag = JsonToNBT.getTagFromJson(data.get("file-data"));
                 File file = new File(data.getOrDefault("file-name", ""), data.get("file-app"), tag);
                 Dialog dialog = new Dialog.SaveFile(frame.getApp(), file);
                 frame.getApp().openDialog(dialog);

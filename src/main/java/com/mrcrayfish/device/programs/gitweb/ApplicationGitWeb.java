@@ -11,7 +11,7 @@ import com.mrcrayfish.device.programs.gitweb.component.GitWebFrame;
 import com.mrcrayfish.device.programs.gitweb.layout.TextLayout;
 import com.mrcrayfish.device.programs.system.layout.StandardLayout;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -35,7 +35,7 @@ public class ApplicationGitWeb extends Application
     private TextLayout scrollable;
 
     @Override
-    public void init(@Nullable NBTTagCompound intent)
+    public void init(@Nullable CompoundNBT intent)
     {
         layoutBrowser = new StandardLayout("GitWeb", 362, 240, this, null);
         layoutBrowser.setBackground((gui, mc, x, y, width, height, mouseX, mouseY, windowActive) ->
@@ -111,8 +111,8 @@ public class ApplicationGitWeb extends Application
     }
 
     @Override
-    public void load(NBTTagCompound tag) {}
+    public void load(CompoundNBT tag) {}
 
     @Override
-    public void save(NBTTagCompound tag) {}
+    public void save(CompoundNBT tag) {}
 }

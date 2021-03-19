@@ -4,7 +4,7 @@ import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.programs.auction.AuctionManager;
 import com.mrcrayfish.device.programs.auction.object.AuctionItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
@@ -27,7 +27,7 @@ public class TaskGetAuctions extends Task
 	}
 
 	@Override
-	public void prepareRequest(NBTTagCompound nbt)
+	public void prepareRequest(CompoundNBT nbt)
 	{
 		if(seller != null)
 		{
@@ -36,7 +36,7 @@ public class TaskGetAuctions extends Task
 	}
 
 	@Override
-	public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+	public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
 	{
 		if(nbt.hasKey("seller"))
 		{
@@ -45,14 +45,14 @@ public class TaskGetAuctions extends Task
 	}
 
 	@Override
-	public void prepareResponse(NBTTagCompound nbt)
+	public void prepareResponse(CompoundNBT nbt)
 	{
 		if(seller != null)
 		{
 			List<AuctionItem> items = AuctionManager.INSTANCE.getItemsForSeller(seller);
 			NBTTagList tagList = new NBTTagList();
 			items.forEach(i -> {
-				NBTTagCompound itemTag = new NBTTagCompound();
+				CompoundNBT itemTag = new CompoundNBT();
 				i.writeToNBT(itemTag);
 				tagList.appendTag(itemTag);
 			});
@@ -66,7 +66,7 @@ public class TaskGetAuctions extends Task
 	}
 
 	@Override
-	public void processResponse(NBTTagCompound nbt) {
+	public void processResponse(CompoundNBT nbt) {
 		AuctionManager.INSTANCE.readFromNBT(nbt);
 	}
 }

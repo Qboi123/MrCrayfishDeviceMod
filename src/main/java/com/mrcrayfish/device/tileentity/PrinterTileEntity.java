@@ -2,7 +2,7 @@ package com.mrcrayfish.device.tileentity;
 
 import com.mrcrayfish.device.DeviceConfig;
 import com.mrcrayfish.device.api.print.IPrint;
-import com.mrcrayfish.device.block.BlockPrinter;
+import com.mrcrayfish.device.block.PrinterBlock;
 import com.mrcrayfish.device.init.DeviceSounds;
 import com.mrcrayfish.device.util.CollisionHelper;
 import net.minecraft.block.state.IBlockState;
@@ -10,7 +10,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.util.Constants;
@@ -18,12 +18,12 @@ import net.minecraftforge.common.util.Constants;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import static com.mrcrayfish.device.tileentity.TileEntityPrinter.State.*;
+import static com.mrcrayfish.device.tileentity.PrinterTileEntity.State.*;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
-public class TileEntityPrinter extends TileEntityNetworkDevice.Colored
+public class PrinterTileEntity extends NetworkDeviceTileEntity.Colored
 {
     private State state = IDLE;
 
@@ -63,7 +63,7 @@ public class TileEntityPrinter extends TileEntityNetworkDevice.Colored
             if(!world.isRemote)
             {
                 IBlockState state = world.getBlockState(pos);
-                double[] fixedPosition = CollisionHelper.fixRotation(state.getValue(BlockPrinter.FACING), 0.15, 0.5, 0.15, 0.5);
+                double[] fixedPosition = CollisionHelper.fixRotation(state.getValue(PrinterBlock.FACING), 0.15, 0.5, 0.15, 0.5);
                 EntityItem entity = new EntityItem(world, pos.getX() + fixedPosition[0], pos.getY() + 0.0625, pos.getZ() + fixedPosition[1], IPrint.generateItem(currentPrint));
                 entity.motionX = 0;
                 entity.motionY = 0;
@@ -86,7 +86,7 @@ public class TileEntityPrinter extends TileEntityNetworkDevice.Colored
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void readFromNBT(CompoundNBT compound)
     {
         super.readFromNBT(compound);
         if(compound.hasKey("currentPrint", Constants.NBT.TAG_COMPOUND))
@@ -122,7 +122,7 @@ public class TileEntityPrinter extends TileEntityNetworkDevice.Colored
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    public CompoundNBT writeToNBT(CompoundNBT compound)
     {
         super.writeToNBT(compound);
         compound.setInteger("totalPrintTime", totalPrintTime);
@@ -145,9 +145,9 @@ public class TileEntityPrinter extends TileEntityNetworkDevice.Colored
     }
 
     @Override
-    public NBTTagCompound writeSyncTag()
+    public CompoundNBT writeSyncTag()
     {
-        NBTTagCompound tag = super.writeSyncTag();
+        CompoundNBT tag = super.writeSyncTag();
         tag.setInteger("paperCount", paperCount);
         return tag;
     }

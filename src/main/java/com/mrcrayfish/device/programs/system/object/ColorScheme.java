@@ -1,12 +1,12 @@
 package com.mrcrayfish.device.programs.system.object;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.Constants;
 
 import java.awt.*;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ColorScheme
 {
@@ -104,9 +104,9 @@ public class ColorScheme
         itemHighlightColor = Color.decode("0x757575").getRGB();
     }
 
-    public NBTTagCompound toTag()
+    public CompoundNBT toTag()
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setInteger("textColor", textColor);
         tag.setInteger("textSecondaryColor", textSecondaryColor);
         tag.setInteger("headerColor", headerColor);
@@ -117,7 +117,7 @@ public class ColorScheme
         return tag;
     }
 
-    public static ColorScheme fromTag(NBTTagCompound tag)
+    public static ColorScheme fromTag(CompoundNBT tag)
     {
         ColorScheme scheme = new ColorScheme();
         if(tag.hasKey("textColor", Constants.NBT.TAG_INT))

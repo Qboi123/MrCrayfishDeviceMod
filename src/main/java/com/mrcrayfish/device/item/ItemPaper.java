@@ -3,12 +3,12 @@ package com.mrcrayfish.device.item;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nullable;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ItemPaper extends ItemBlock
 {
@@ -22,12 +22,12 @@ public class ItemPaper extends ItemBlock
 
     @Nullable
     @Override
-    public NBTTagCompound getNBTShareTag(ItemStack stack)
+    public CompoundNBT getNBTShareTag(ItemStack stack)
     {
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundNBT tag = stack.getTagCompound();
         if(tag != null)
         {
-            NBTTagCompound copy = tag.copy();
+            CompoundNBT copy = tag.copy();
             copy.removeTag("BlockEntityTag");
             return copy;
         }

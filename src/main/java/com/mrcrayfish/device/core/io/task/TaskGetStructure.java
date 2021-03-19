@@ -5,9 +5,9 @@ import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.core.io.ServerFolder;
 import com.mrcrayfish.device.core.io.drive.AbstractDrive;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import java.util.UUID;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskGetStructure extends Task
 {
@@ -37,19 +37,19 @@ public class TaskGetStructure extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setString("uuid", uuid);
         nbt.setLong("pos", pos.toLong());
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         TileEntity tileEntity = world.getTileEntity(BlockPos.fromLong(nbt.getLong("pos")));
-        if(tileEntity instanceof TileEntityLaptop)
+        if(tileEntity instanceof LaptopTileEntity)
         {
-            TileEntityLaptop laptop = (TileEntityLaptop) tileEntity;
+            LaptopTileEntity laptop = (LaptopTileEntity) tileEntity;
             FileSystem fileSystem = laptop.getFileSystem();
             UUID uuid = UUID.fromString(nbt.getString("uuid"));
             AbstractDrive serverDrive = fileSystem.getAvailableDrives(world, true).get(uuid);
@@ -62,7 +62,7 @@ public class TaskGetStructure extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
         if(folder != null)
         {
@@ -72,7 +72,7 @@ public class TaskGetStructure extends Task
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
 
     }

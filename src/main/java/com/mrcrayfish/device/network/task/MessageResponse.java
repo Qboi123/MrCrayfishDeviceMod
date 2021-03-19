@@ -3,7 +3,7 @@ package com.mrcrayfish.device.network.task;
 import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.api.task.TaskManager;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -13,7 +13,7 @@ public class MessageResponse implements IMessage, IMessageHandler<MessageRespons
 {
 	private int id;
 	private Task request;
-	private NBTTagCompound nbt;
+	private CompoundNBT nbt;
 	
 	public MessageResponse() {}
 	
@@ -48,7 +48,7 @@ public class MessageResponse implements IMessage, IMessageHandler<MessageRespons
 		buf.writeInt(this.id);
 		buf.writeBoolean(this.request.isSucessful());
 		ByteBufUtils.writeUTF8String(buf, this.request.getName());
-		NBTTagCompound nbt = new NBTTagCompound();
+		CompoundNBT nbt = new CompoundNBT();
 		this.request.prepareResponse(nbt);
 		ByteBufUtils.writeTag(buf, nbt);
 		this.request.complete();

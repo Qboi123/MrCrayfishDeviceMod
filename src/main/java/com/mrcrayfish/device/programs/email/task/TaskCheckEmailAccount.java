@@ -3,7 +3,7 @@ package com.mrcrayfish.device.programs.email.task;
 import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.programs.email.EmailManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 public class TaskCheckEmailAccount extends Task 
@@ -17,10 +17,10 @@ public class TaskCheckEmailAccount extends Task
 	}
 
 	@Override
-	public void prepareRequest(NBTTagCompound nbt) {}
+	public void prepareRequest(CompoundNBT nbt) {}
 
 	@Override
-	public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player) 
+	public void processRequest(CompoundNBT nbt, World world, EntityPlayer player) 
 	{
 		this.hasAccount = EmailManager.INSTANCE.hasAccount(player.getUniqueID());
 		if(this.hasAccount)
@@ -31,12 +31,12 @@ public class TaskCheckEmailAccount extends Task
 	}
 
 	@Override
-	public void prepareResponse(NBTTagCompound nbt) 
+	public void prepareResponse(CompoundNBT nbt) 
 	{
 		if(this.isSucessful()) nbt.setString("Name", this.name);
 	}
 
 	@Override
-	public void processResponse(NBTTagCompound nbt) {}
+	public void processResponse(CompoundNBT nbt) {}
 
 }

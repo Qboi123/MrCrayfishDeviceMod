@@ -2,8 +2,8 @@ package com.mrcrayfish.device.tileentity;
 
 import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.util.TileEntityUtil;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.DyeColor;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -11,14 +11,14 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityLaptop extends TileEntityNetworkDevice.Colored
+public class LaptopTileEntity extends NetworkDeviceTileEntity.Colored
 {
 	private static final int OPENED_ANGLE = 102;
 
 	private boolean open = false;
 
-	private NBTTagCompound applicationData;
-	private NBTTagCompound systemData;
+	private CompoundNBT applicationData;
+	private CompoundNBT systemData;
 	private FileSystem fileSystem;
 
 	@SideOnly(Side.CLIENT)
@@ -28,7 +28,7 @@ public class TileEntityLaptop extends TileEntityNetworkDevice.Colored
 	private int prevRotation;
 
 	@SideOnly(Side.CLIENT)
-	private EnumDyeColor externalDriveColor;
+	private DyeColor externalDriveColor;
 
 	@Override
 	public String getDeviceName()
@@ -61,7 +61,7 @@ public class TileEntityLaptop extends TileEntityNetworkDevice.Colored
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) 
+	public void readFromNBT(CompoundNBT compound)
 	{
 		super.readFromNBT(compound);
 		if(compound.hasKey("open"))
@@ -85,13 +85,13 @@ public class TileEntityLaptop extends TileEntityNetworkDevice.Colored
 			this.externalDriveColor = null;
 			if(compound.getByte("external_drive_color") != -1)
 			{
-				this.externalDriveColor = EnumDyeColor.byMetadata(compound.getByte("external_drive_color"));
+				this.externalDriveColor = DyeColor.byMetadata(compound.getByte("external_drive_color"));
 			}
 		}
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) 
+	public CompoundNBT writeToNBT(CompoundNBT compound)
 	{
 		super.writeToNBT(compound);
 		compound.setBoolean("open", open);
@@ -114,9 +114,9 @@ public class TileEntityLaptop extends TileEntityNetworkDevice.Colored
 	}
 
 	@Override
-	public NBTTagCompound writeSyncTag()
+	public CompoundNBT writeSyncTag()
 	{
-		NBTTagCompound tag = super.writeSyncTag();
+		CompoundNBT tag = super.writeSyncTag();
 		tag.setBoolean("open", open);
 		tag.setTag("system_data", getSystemData());
 
@@ -157,16 +157,16 @@ public class TileEntityLaptop extends TileEntityNetworkDevice.Colored
 		return open;
 	}
 
-	public NBTTagCompound getApplicationData()
+	public CompoundNBT getApplicationData()
     {
-		return applicationData != null ? applicationData : new NBTTagCompound();
+		return applicationData != null ? applicationData : new CompoundNBT();
     }
 
-	public NBTTagCompound getSystemData()
+	public CompoundNBT getSystemData()
 	{
 		if(systemData == null)
 		{
-			systemData = new NBTTagCompound();
+			systemData = new CompoundNBT();
 		}
 		return systemData;
 	}
@@ -175,19 +175,19 @@ public class TileEntityLaptop extends TileEntityNetworkDevice.Colored
 	{
 		if(fileSystem == null)
 		{
-			fileSystem = new FileSystem(this, new NBTTagCompound());
+			fileSystem = new FileSystem(this, new CompoundNBT());
 		}
 		return fileSystem;
 	}
 
-	public void setApplicationData(String appId, NBTTagCompound applicationData)
+	public void setApplicationData(String appId, CompoundNBT applicationData)
 	{
 		this.applicationData = applicationData;
 		markDirty();
 		TileEntityUtil.markBlockForUpdate(world, pos);
 	}
 
-	public void setSystemData(NBTTagCompound systemData)
+	public void setSystemData(CompoundNBT systemData)
 	{
 		this.systemData = systemData;
 		markDirty();
@@ -207,7 +207,7 @@ public class TileEntityLaptop extends TileEntityNetworkDevice.Colored
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EnumDyeColor getExternalDriveColor()
+	public DyeColor getExternalDriveColor()
 	{
 		return externalDriveColor;
 	}

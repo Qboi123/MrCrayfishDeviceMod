@@ -1,11 +1,10 @@
 package com.mrcrayfish.device.core.task;
 
-import com.mrcrayfish.device.api.ApplicationManager;
 import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.object.AppInfo;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskInstallApp extends Task
 {
@@ -36,7 +35,7 @@ public class TaskInstallApp extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setString("appId", appId);
         nbt.setLong("pos", laptopPos.toLong());
@@ -44,14 +43,14 @@ public class TaskInstallApp extends Task
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         String appId = nbt.getString("appId");
         TileEntity tileEntity = world.getTileEntity(BlockPos.fromLong(nbt.getLong("pos")));
-        if(tileEntity instanceof TileEntityLaptop)
+        if(tileEntity instanceof LaptopTileEntity)
         {
-            TileEntityLaptop laptop = (TileEntityLaptop) tileEntity;
-            NBTTagCompound systemData = laptop.getSystemData();
+            LaptopTileEntity laptop = (LaptopTileEntity) tileEntity;
+            CompoundNBT systemData = laptop.getSystemData();
             NBTTagList tagList = systemData.getTagList("InstalledApps", Constants.NBT.TAG_STRING);
 
             if(nbt.getBoolean("install"))
@@ -82,13 +81,13 @@ public class TaskInstallApp extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
 
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
 
     }

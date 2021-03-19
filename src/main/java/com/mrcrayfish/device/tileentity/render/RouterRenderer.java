@@ -1,11 +1,11 @@
 package com.mrcrayfish.device.tileentity.render;
 
-import com.mrcrayfish.device.block.BlockPrinter;
-import com.mrcrayfish.device.block.BlockRouter;
+import com.mrcrayfish.device.block.PrinterBlock;
+import com.mrcrayfish.device.block.RouterBlock;
 import com.mrcrayfish.device.core.network.NetworkDevice;
 import com.mrcrayfish.device.core.network.Router;
 import com.mrcrayfish.device.init.DeviceBlocks;
-import com.mrcrayfish.device.tileentity.TileEntityRouter;
+import com.mrcrayfish.device.tileentity.RouterTileEntity;
 import com.mrcrayfish.device.util.CollisionHelper;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -22,12 +22,12 @@ import org.lwjgl.opengl.GL11;
 import java.util.Collection;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
-public class RouterRenderer extends TileEntitySpecialRenderer<TileEntityRouter>
+public class RouterRenderer extends TileEntitySpecialRenderer<RouterTileEntity>
 {
     @Override
-    public void render(TileEntityRouter te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+    public void render(RouterTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
         IBlockState state = te.getWorld().getBlockState(te.getPos());
         if(state.getBlock() != DeviceBlocks.ROUTER)
@@ -86,9 +86,9 @@ public class RouterRenderer extends TileEntitySpecialRenderer<TileEntityRouter>
         float lineY = 0.1F;
         float lineZ = 0.5F;
 
-        if(state.getValue(BlockRouter.VERTICAL))
+        if(state.getValue(RouterBlock.VERTICAL))
         {
-            double[] fixedPosition = CollisionHelper.fixRotation(state.getValue(BlockPrinter.FACING), 14 * 0.0625, 0.5, 14 * 0.0625, 0.5);
+            double[] fixedPosition = CollisionHelper.fixRotation(state.getValue(PrinterBlock.FACING), 14 * 0.0625, 0.5, 14 * 0.0625, 0.5);
             lineX = (float) fixedPosition[0];
             lineY = 0.35F;
             lineZ = (float) fixedPosition[1];

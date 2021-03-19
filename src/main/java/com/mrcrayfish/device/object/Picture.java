@@ -1,7 +1,7 @@
 package com.mrcrayfish.device.object;
 
 import com.mrcrayfish.device.api.io.File;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -84,7 +84,7 @@ public class Picture
 		return name;
 	}
 	
-	public void writeToNBT(NBTTagCompound tagCompound)
+	public void writeToNBT(CompoundNBT tagCompound)
 	{
 		tagCompound.setString("Name", getName());
 		tagCompound.setString("Author", getAuthor());
@@ -94,7 +94,7 @@ public class Picture
 	
 	public static Picture fromFile(File file)
 	{
-		NBTTagCompound data = file.getData();
+		CompoundNBT data = file.getData();
 		Picture picture = new Picture(data.getString("Name"), data.getString("Author"), Size.getFromSize(data.getInteger("Resolution")));
 		picture.source = file;
 		picture.pixels = data.getIntArray("Pixels");

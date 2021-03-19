@@ -21,12 +21,12 @@ import com.mrcrayfish.device.core.network.task.TaskGetDevices;
 import com.mrcrayfish.device.core.print.task.TaskPrint;
 import com.mrcrayfish.device.programs.system.component.FileBrowser;
 import com.mrcrayfish.device.programs.system.object.ColorScheme;
-import com.mrcrayfish.device.tileentity.TileEntityPrinter;
+import com.mrcrayfish.device.tileentity.PrinterTileEntity;
 import com.mrcrayfish.device.util.GLHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -74,7 +74,7 @@ public abstract class Dialog extends Wrappable
 	}
 
 	@Override
-	public void init(@Nullable NBTTagCompound intent)
+	public void init(@Nullable CompoundNBT intent)
 	{
 		this.defaultLayout.clear();
 		this.setLayout(defaultLayout);
@@ -211,7 +211,7 @@ public abstract class Dialog extends Wrappable
 		}
 		
 		@Override
-		public void init(@Nullable NBTTagCompound intent)
+		public void init(@Nullable CompoundNBT intent)
 		{
 			super.init(intent);
 			
@@ -276,7 +276,7 @@ public abstract class Dialog extends Wrappable
 		}
 
 		@Override
-		public void init(@Nullable NBTTagCompound intent)
+		public void init(@Nullable CompoundNBT intent)
 		{
 			super.init(intent);
 			
@@ -391,7 +391,7 @@ public abstract class Dialog extends Wrappable
 		}
 
 		@Override
-		public void init(@Nullable NBTTagCompound intent)
+		public void init(@Nullable CompoundNBT intent)
 		{
 			super.init(intent);
 
@@ -527,7 +527,7 @@ public abstract class Dialog extends Wrappable
 		}
 
 		@Override
-		public void init(@Nullable NBTTagCompound intent)
+		public void init(@Nullable CompoundNBT intent)
 		{
 			super.init(intent);
 
@@ -642,7 +642,7 @@ public abstract class Dialog extends Wrappable
 	{
 		private final Application app;
 		private String name;
-		private NBTTagCompound data;
+		private CompoundNBT data;
 
 		private String positiveText = "Save";
 		private String negativeText = "Cancel";
@@ -658,7 +658,7 @@ public abstract class Dialog extends Wrappable
 
 		private String path = FileSystem.DIR_HOME;
 
-		public SaveFile(Application app, NBTTagCompound data)
+		public SaveFile(Application app, CompoundNBT data)
 		{
 			this.app = app;
 			this.data = data;
@@ -674,7 +674,7 @@ public abstract class Dialog extends Wrappable
 		}
 
 		@Override
-		public void init(@Nullable NBTTagCompound intent)
+		public void init(@Nullable CompoundNBT intent)
 		{
 			super.init(intent);
 			main = new Layout(211, 145);
@@ -844,7 +844,7 @@ public abstract class Dialog extends Wrappable
 		}
 
 		@Override
-		public void init(@Nullable NBTTagCompound intent)
+		public void init(@Nullable CompoundNBT intent)
 		{
 			super.init(intent);
 
@@ -961,7 +961,7 @@ public abstract class Dialog extends Wrappable
 		{
 			itemList.removeAll();
 			itemList.setLoading(true);
-			Task task = new TaskGetDevices(Laptop.getPos(), TileEntityPrinter.class);
+			Task task = new TaskGetDevices(Laptop.getPos(), PrinterTileEntity.class);
 			task.setCallback((tagCompound, success) ->
 			{
 				if(success)
@@ -995,7 +995,7 @@ public abstract class Dialog extends Wrappable
 			}
 
 			@Override
-			public void init(@Nullable NBTTagCompound intent)
+			public void init(@Nullable CompoundNBT intent)
 			{
 				super.init(intent);
 

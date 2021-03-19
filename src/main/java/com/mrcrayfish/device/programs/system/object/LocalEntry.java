@@ -3,7 +3,7 @@ package com.mrcrayfish.device.programs.system.object;
 import com.mrcrayfish.device.object.AppInfo;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class LocalEntry implements AppEntry
 {

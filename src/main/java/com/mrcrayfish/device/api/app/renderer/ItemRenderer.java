@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public abstract class ItemRenderer<E>
 {

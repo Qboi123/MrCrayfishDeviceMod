@@ -16,10 +16,10 @@ import com.mrcrayfish.device.core.io.task.TaskGetFiles;
 import com.mrcrayfish.device.core.io.task.TaskGetMainDrive;
 import com.mrcrayfish.device.core.io.task.TaskSendAction;
 import com.mrcrayfish.device.init.DeviceItems;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
-import net.minecraft.item.EnumDyeColor;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -48,18 +48,18 @@ public class FileSystem
 	private AbstractDrive mainDrive = null;
 	private Map<UUID, AbstractDrive> additionalDrives = new HashMap<>();
 	private AbstractDrive attachedDrive = null;
-	private EnumDyeColor attachedDriveColor = EnumDyeColor.RED;
+	private DyeColor attachedDriveColor = DyeColor.RED;
 
-	private TileEntityLaptop tileEntity;
+	private LaptopTileEntity tileEntity;
 	
-	public FileSystem(TileEntityLaptop tileEntity, NBTTagCompound fileSystemTag)
+	public FileSystem(LaptopTileEntity tileEntity, CompoundNBT fileSystemTag)
 	{
 		this.tileEntity = tileEntity;
 
 		load(fileSystemTag);
 	}
 
-	private void load(NBTTagCompound fileSystemTag)
+	private void load(CompoundNBT fileSystemTag)
 	{
 		if(fileSystemTag.hasKey("main_drive", Constants.NBT.TAG_COMPOUND))
 		{
@@ -71,7 +71,7 @@ public class FileSystem
 			NBTTagList tagList = fileSystemTag.getTagList("drives", Constants.NBT.TAG_COMPOUND);
 			for(int i = 0; i < tagList.tagCount(); i++)
 			{
-				NBTTagCompound driveTag = tagList.getCompoundTagAt(i);
+				CompoundNBT driveTag = tagList.getCompoundTagAt(i);
 				AbstractDrive drive = InternalDrive.fromTag(driveTag.getCompoundTag("drive"));
 				additionalDrives.put(drive.getUUID(), drive);
 			}
@@ -84,7 +84,7 @@ public class FileSystem
 
 		if(fileSystemTag.hasKey("external_drive_color", Constants.NBT.TAG_BYTE))
 		{
-			attachedDriveColor = EnumDyeColor.byMetadata(fileSystemTag.getByte("external_drive_color"));
+			attachedDriveColor = DyeColor.byMetadata(fileSystemTag.getByte("external_drive_color"));
 		}
 
 		setupDefault();
@@ -179,13 +179,13 @@ public class FileSystem
 	{
 		if(attachedDrive == null)
 		{
-			NBTTagCompound flashDriveTag = getExternalDriveTag(flashDrive);
+			CompoundNBT flashDriveTag = getExternalDriveTag(flashDrive);
 			AbstractDrive drive = ExternalDrive.fromTag(flashDriveTag.getCompoundTag("drive"));
 			if(drive != null)
 			{
 				drive.setName(flashDrive.getDisplayName());
 				attachedDrive = drive;
-				attachedDriveColor = EnumDyeColor.byMetadata(flashDrive.getMetadata());
+				attachedDriveColor = DyeColor.byMetadata(flashDrive.getMetadata());
 
 				tileEntity.getPipeline().setByte("external_drive_color", (byte) attachedDriveColor.getMetadata());
 				tileEntity.sync();
@@ -201,7 +201,7 @@ public class FileSystem
 		return attachedDrive;
 	}
 
-	public EnumDyeColor getAttachedDriveColor()
+	public DyeColor getAttachedDriveColor()
 	{
 		return attachedDriveColor;
 	}
@@ -220,12 +220,12 @@ public class FileSystem
 		return null;
 	}
 
-	private NBTTagCompound getExternalDriveTag(ItemStack stack)
+	private CompoundNBT getExternalDriveTag(ItemStack stack)
 	{
-		NBTTagCompound tagCompound = stack.getTagCompound();
+		CompoundNBT tagCompound = stack.getTagCompound();
 		if(tagCompound == null)
 		{
-			tagCompound = new NBTTagCompound();
+			tagCompound = new CompoundNBT();
 			tagCompound.setTag("drive", new ExternalDrive(stack.getDisplayName()).toTag());
 			stack.setTagCompound(tagCompound);
 		}
@@ -321,9 +321,9 @@ public class FileSystem
 		}
 	}
 
-	public NBTTagCompound toTag()
+	public CompoundNBT toTag()
 	{
-		NBTTagCompound fileSystemTag = new NBTTagCompound();
+		CompoundNBT fileSystemTag = new CompoundNBT();
 
 		if(mainDrive != null)
 			fileSystemTag.setTag("main_drive", mainDrive.toTag());
@@ -377,15 +377,15 @@ public class FileSystem
 			return message;
 		}
 
-		public NBTTagCompound toTag()
+		public CompoundNBT toTag()
 		{
-			NBTTagCompound responseTag = new NBTTagCompound();
+			CompoundNBT responseTag = new CompoundNBT();
 			responseTag.setInteger("status", status);
 			responseTag.setString("message", message);
 			return responseTag;
 		}
 
-		public static Response fromTag(NBTTagCompound responseTag)
+		public static Response fromTag(CompoundNBT responseTag)
 		{
 			return new Response(responseTag.getInteger("status"), responseTag.getString("message"));
 		}

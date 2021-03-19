@@ -1,6 +1,6 @@
 package com.mrcrayfish.device.programs;
 
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import com.mrcrayfish.device.api.app.*;
 import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.app.Dialog;
@@ -25,9 +25,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -87,7 +86,7 @@ public class ApplicationPixelPainter extends Application
 	}
 
 	@Override
-	public void init(@Nullable NBTTagCompound intent)
+	public void init(@Nullable CompoundNBT intent)
 	{
 		/* Main Menu */
 		layoutMainMenu = new StandardLayout("Main Menu", 201, 125, this, null);
@@ -346,7 +345,7 @@ public class ApplicationPixelPainter extends Application
 		{
 			canvas.picture.pixels = canvas.copyPixels();
 
-			NBTTagCompound pictureTag = new NBTTagCompound();
+			CompoundNBT pictureTag = new CompoundNBT();
 			canvas.picture.writeToNBT(pictureTag);
 
 			if(canvas.isExistingImage())
@@ -445,13 +444,13 @@ public class ApplicationPixelPainter extends Application
 	}
 
 	@Override
-	public void load(NBTTagCompound tagCompound)
+	public void load(CompoundNBT tagCompound)
 	{
 
 	}
 
 	@Override
-	public void save(NBTTagCompound tagCompound)
+	public void save(CompoundNBT tagCompound)
 	{
 
 	}
@@ -519,9 +518,9 @@ public class ApplicationPixelPainter extends Application
 		}
 
 		@Override
-		public NBTTagCompound toTag()
+		public CompoundNBT toTag()
 		{
-			NBTTagCompound tag = new NBTTagCompound();
+			CompoundNBT tag = new CompoundNBT();
 			tag.setString("name", name);
 			tag.setIntArray("pixels", pixels);
 			tag.setInteger("resolution", resolution);
@@ -530,7 +529,7 @@ public class ApplicationPixelPainter extends Application
 		}
 
 		@Override
-		public void fromTag(NBTTagCompound tag)
+		public void fromTag(CompoundNBT tag)
 		{
 			name = tag.getString("name");
 			cut = tag.getBoolean("cut");
@@ -546,12 +545,12 @@ public class ApplicationPixelPainter extends Application
 
 	public static class PictureRenderer implements IPrint.Renderer
 	{
-		public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/model/paper.png");
+		public static final ResourceLocation TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/model/paper.png");
 
 		@Override
-		public boolean render(NBTTagCompound data)
+		public boolean render(CompoundNBT data)
 		{
-			if(data.hasKey("pixels", Constants.NBT.TAG_INT_ARRAY) && data.hasKey("resolution", Constants.NBT.TAG_INT))
+			if(data.hasKey("pixels", net.minecraftforge.common.util.Constants.NBT.TAG_INT_ARRAY) && data.hasKey("resolution", net.minecraftforge.common.util.Constants.NBT.TAG_INT))
 			{
 				int[] pixels = data.getIntArray("pixels");
 				int resolution = data.getInteger("resolution");

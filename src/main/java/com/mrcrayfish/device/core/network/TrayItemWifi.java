@@ -12,8 +12,8 @@ import com.mrcrayfish.device.core.Laptop;
 import com.mrcrayfish.device.core.network.task.TaskConnect;
 import com.mrcrayfish.device.core.network.task.TaskPing;
 import com.mrcrayfish.device.object.TrayItem;
-import com.mrcrayfish.device.tileentity.TileEntityDevice;
-import com.mrcrayfish.device.tileentity.TileEntityRouter;
+import com.mrcrayfish.device.tileentity.DeviceTileEntity;
+import com.mrcrayfish.device.tileentity.RouterTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.tileentity.TileEntity;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TrayItemWifi extends TrayItem
 {
@@ -182,9 +182,9 @@ public class TrayItemWifi extends TrayItem
                 {
                     BlockPos pos = new BlockPos(laptopPos.getX() + x, laptopPos.getY() + y, laptopPos.getZ() + z);
                     TileEntity tileEntity = world.getTileEntity(pos);
-                    if(tileEntity instanceof TileEntityRouter)
+                    if(tileEntity instanceof RouterTileEntity)
                     {
-                        routers.add(new Device((TileEntityDevice) tileEntity));
+                        routers.add(new Device((DeviceTileEntity) tileEntity));
                     }
                 }
             }

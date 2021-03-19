@@ -1,6 +1,6 @@
 package com.mrcrayfish.device.network.task;
 
-import com.mrcrayfish.device.tileentity.TileEntityRouter;
+import com.mrcrayfish.device.tileentity.RouterTileEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class MessageSyncBlock implements IMessage, IMessageHandler<MessageSyncBlock, MessageSyncBlock>
 {
@@ -40,9 +40,9 @@ public class MessageSyncBlock implements IMessage, IMessageHandler<MessageSyncBl
     {
         World world = ctx.getServerHandler().player.world;
         TileEntity tileEntity = world.getTileEntity(message.routerPos);
-        if(tileEntity instanceof TileEntityRouter)
+        if(tileEntity instanceof RouterTileEntity)
         {
-            TileEntityRouter tileEntityRouter = (TileEntityRouter) tileEntity;
+            RouterTileEntity tileEntityRouter = (RouterTileEntity) tileEntity;
             tileEntityRouter.syncDevicesToClient();
         }
         return null;

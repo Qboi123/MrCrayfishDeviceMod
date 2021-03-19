@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class FurnaceBox extends ContainerBox
 {

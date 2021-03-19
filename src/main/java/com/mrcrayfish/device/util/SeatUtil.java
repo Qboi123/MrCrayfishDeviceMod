@@ -1,7 +1,9 @@
 package com.mrcrayfish.device.util;
 
-import com.mrcrayfish.device.entity.EntitySeat;
+import com.mrcrayfish.device.entity.SeatEntity;
+import com.mrcrayfish.device.init.DeviceEntityTypes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -9,16 +11,16 @@ import net.minecraft.world.World;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class SeatUtil
 {
-    public static void createSeatAndSit(World worldIn, BlockPos pos, EntityPlayer playerIn, double yOffset)
+    public static void createSeatAndSit(World worldIn, BlockPos pos, PlayerEntity playerIn, double yOffset)
     {
-        List<EntitySeat> seats = worldIn.getEntitiesWithinAABB(EntitySeat.class, new AxisAlignedBB(pos));
+        List<SeatEntity> seats = worldIn.getEntitiesWithinAABB(SeatEntity.class, new AxisAlignedBB(pos));
         if(!seats.isEmpty())
         {
-            EntitySeat seat = seats.get(0);
+            SeatEntity seat = seats.get(0);
             if(seat.getRidingEntity() == null)
             {
                 playerIn.startRiding(seat);
@@ -26,8 +28,8 @@ public class SeatUtil
         }
         else
         {
-            EntitySeat seat = new EntitySeat(worldIn, pos, yOffset);
-            worldIn.spawnEntity(seat);
+            SeatEntity seat = new SeatEntity(DeviceEntityTypes.SEAT.get(), worldIn, pos, yOffset);
+            worldIn.addEntity(seat);
             playerIn.startRiding(seat);
         }
     }

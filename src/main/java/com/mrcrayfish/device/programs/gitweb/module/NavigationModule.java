@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class NavigationModule extends Module
 {

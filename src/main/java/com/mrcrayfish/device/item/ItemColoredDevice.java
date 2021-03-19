@@ -1,10 +1,10 @@
 package com.mrcrayfish.device.item;
 
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.DyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ItemColoredDevice extends ItemDevice implements SubItems
 {
@@ -31,7 +31,7 @@ public class ItemColoredDevice extends ItemDevice implements SubItems
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-        EnumDyeColor color = EnumDyeColor.byMetadata(stack.getMetadata());
+        DyeColor color = DyeColor.byMetadata(stack.getMetadata());
         String colorName = color.getName().replace("_", " ");
         colorName = WordUtils.capitalize(colorName);
         tooltip.add("Color: " + TextFormatting.BOLD.toString() + getFromColor(color).toString() + colorName);
@@ -42,7 +42,7 @@ public class ItemColoredDevice extends ItemDevice implements SubItems
     {
         if(isInCreativeTab(tab))
         {
-            for(EnumDyeColor color : EnumDyeColor.values())
+            for(DyeColor color : DyeColor.values())
             {
                 items.add(new ItemStack(this, 1, color.getMetadata()));
             }
@@ -53,14 +53,14 @@ public class ItemColoredDevice extends ItemDevice implements SubItems
     public NonNullList<ResourceLocation> getModels()
     {
         NonNullList<ResourceLocation> modelLocations = NonNullList.create();
-        for(EnumDyeColor color : EnumDyeColor.values())
+        for(DyeColor color : DyeColor.values())
         {
-            modelLocations.add(new ResourceLocation(Reference.MOD_ID, getUnlocalizedName().substring(5) + "/" + color.getName()));
+            modelLocations.add(new ResourceLocation(Constants.MOD_ID, getUnlocalizedName().substring(5) + "/" + color.getName()));
         }
         return modelLocations;
     }
 
-    private static TextFormatting getFromColor(EnumDyeColor color)
+    private static TextFormatting getFromColor(DyeColor color)
     {
         switch(color)
         {

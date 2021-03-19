@@ -8,13 +8,13 @@ import com.mrcrayfish.device.api.app.component.TextArea;
 import com.mrcrayfish.device.api.app.interfaces.IHighlight;
 import com.mrcrayfish.device.core.Laptop;
 import com.mrcrayfish.device.core.client.LaptopFontRenderer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.TextFormatting;
 
 import javax.annotation.Nullable;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ApplicationTextArea extends Application
 {
@@ -85,7 +85,7 @@ public class ApplicationTextArea extends Application
         }
     };
     @Override
-    public void init(@Nullable NBTTagCompound intent)
+    public void init(@Nullable CompoundNBT intent)
     {
         Layout layout = new Layout(250, 150);
 
@@ -137,13 +137,13 @@ public class ApplicationTextArea extends Application
     }
 
     @Override
-    public void load(NBTTagCompound tagCompound)
+    public void load(CompoundNBT tagCompound)
     {
 
     }
 
     @Override
-    public void save(NBTTagCompound tagCompound)
+    public void save(CompoundNBT tagCompound)
     {
 
     }

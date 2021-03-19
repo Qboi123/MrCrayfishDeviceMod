@@ -1,13 +1,13 @@
 package com.mrcrayfish.device.api.io;
 
 import com.mrcrayfish.device.core.io.FileSystem;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class Drive
 {
@@ -18,7 +18,7 @@ public class Drive
 
     private boolean synced = false;
 
-    public Drive(NBTTagCompound driveTag)
+    public Drive(CompoundNBT driveTag)
     {
         this.name = driveTag.getString("name");
         this.uuid = UUID.fromString(driveTag.getString("uuid"));

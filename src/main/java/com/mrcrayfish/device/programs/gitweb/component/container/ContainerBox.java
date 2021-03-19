@@ -1,6 +1,6 @@
 package com.mrcrayfish.device.programs.gitweb.component.container;
 
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import com.mrcrayfish.device.api.app.Component;
 import com.mrcrayfish.device.api.utils.RenderUtil;
 import com.mrcrayfish.device.core.Laptop;
@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public abstract class ContainerBox extends Component
 {
-    protected static final ResourceLocation CONTAINER_BOXES_TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/gui/container_boxes.png");
+    protected static final ResourceLocation CONTAINER_BOXES_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/gui/container_boxes.png");
 
     public static final int WIDTH = 128;
 

@@ -6,9 +6,9 @@ import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.core.io.ServerFile;
 import com.mrcrayfish.device.core.io.ServerFolder;
 import com.mrcrayfish.device.core.io.drive.AbstractDrive;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskGetFiles extends Task
 {
@@ -43,7 +43,7 @@ public class TaskGetFiles extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setString("uuid", uuid);
         nbt.setString("path", path);
@@ -51,12 +51,12 @@ public class TaskGetFiles extends Task
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         TileEntity tileEntity = world.getTileEntity(BlockPos.fromLong(nbt.getLong("pos")));
-        if(tileEntity instanceof TileEntityLaptop)
+        if(tileEntity instanceof LaptopTileEntity)
         {
-            TileEntityLaptop laptop = (TileEntityLaptop) tileEntity;
+            LaptopTileEntity laptop = (LaptopTileEntity) tileEntity;
             FileSystem fileSystem = laptop.getFileSystem();
             UUID uuid = UUID.fromString(nbt.getString("uuid"));
             AbstractDrive serverDrive = fileSystem.getAvailableDrives(world, true).get(uuid);
@@ -73,13 +73,13 @@ public class TaskGetFiles extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
         if(this.files != null)
         {
             NBTTagList list = new NBTTagList();
             this.files.forEach(f -> {
-                NBTTagCompound fileTag = new NBTTagCompound();
+                CompoundNBT fileTag = new CompoundNBT();
                 fileTag.setString("file_name", f.getName());
                 fileTag.setTag("data", f.toTag());
                 list.appendTag(fileTag);
@@ -89,7 +89,7 @@ public class TaskGetFiles extends Task
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
 
     }

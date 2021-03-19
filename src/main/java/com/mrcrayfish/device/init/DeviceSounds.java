@@ -1,6 +1,6 @@
 package com.mrcrayfish.device.init;
 
-import com.mrcrayfish.device.Reference;
+import com.mrcrayfish.device.Constants;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class DeviceSounds
 {
@@ -28,7 +28,7 @@ public class DeviceSounds
         return sound;
     }
 
-    @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+    @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
     public static class RegistrationHandler
     {
         @SubscribeEvent

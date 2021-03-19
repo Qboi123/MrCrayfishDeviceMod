@@ -5,15 +5,15 @@ import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.core.Laptop;
 import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.core.io.action.FileAction;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskSendAction extends Task
 {
@@ -37,7 +37,7 @@ public class TaskSendAction extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setString("uuid", uuid);
         nbt.setTag("action", action.toTag());
@@ -45,26 +45,26 @@ public class TaskSendAction extends Task
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         FileAction action = FileAction.fromTag(nbt.getCompoundTag("action"));
         TileEntity tileEntity = world.getTileEntity(BlockPos.fromLong(nbt.getLong("pos")));
-        if(tileEntity instanceof TileEntityLaptop)
+        if(tileEntity instanceof LaptopTileEntity)
         {
-            TileEntityLaptop laptop = (TileEntityLaptop) tileEntity;
+            LaptopTileEntity laptop = (LaptopTileEntity) tileEntity;
             response = laptop.getFileSystem().readAction(nbt.getString("uuid"), action, world);
             this.setSuccessful();
         }
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
         nbt.setTag("response", response.toTag());
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
 
     }

@@ -5,7 +5,7 @@ import com.mrcrayfish.device.programs.auction.AuctionManager;
 import com.mrcrayfish.device.programs.auction.object.AuctionItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 public class TaskAddAuction extends Task
@@ -32,7 +32,7 @@ public class TaskAddAuction extends Task
 	}
 
 	@Override
-	public void prepareRequest(NBTTagCompound nbt) 
+	public void prepareRequest(CompoundNBT nbt) 
 	{
 		nbt.setInteger("slot", slot);
 		nbt.setInteger("amount", amount);
@@ -41,7 +41,7 @@ public class TaskAddAuction extends Task
 	}
 
 	@Override
-	public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player) 
+	public void processRequest(CompoundNBT nbt, World world, EntityPlayer player) 
 	{
 		int slot = nbt.getInteger("slot");
 		int amount = nbt.getInteger("amount");
@@ -68,7 +68,7 @@ public class TaskAddAuction extends Task
 	}
 
 	@Override
-	public void prepareResponse(NBTTagCompound nbt)
+	public void prepareResponse(CompoundNBT nbt)
 	{
 		if(isSucessful())
 		{
@@ -77,7 +77,7 @@ public class TaskAddAuction extends Task
 	}
 
 	@Override
-	public void processResponse(NBTTagCompound nbt) 
+	public void processResponse(CompoundNBT nbt) 
 	{
 		if(isSucessful())
 		{

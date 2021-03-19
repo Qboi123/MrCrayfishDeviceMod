@@ -1,75 +1,118 @@
 package com.mrcrayfish.device.tileentity.render;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mrcrayfish.device.DeviceConfig;
 import com.mrcrayfish.device.api.print.IPrint;
 import com.mrcrayfish.device.api.print.PrintingManager;
-import com.mrcrayfish.device.block.BlockPaper;
+import com.mrcrayfish.device.block.PaperBlock;
 import com.mrcrayfish.device.init.DeviceBlocks;
-import com.mrcrayfish.device.tileentity.TileEntityPaper;
+import com.mrcrayfish.device.tileentity.PaperTileEntity;
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.vector.Quaternion;
 import net.minecraftforge.common.util.Constants;
 import org.lwjgl.opengl.GL11;
 
-/**
- * Author: MrCrayfish
- */
-public class PaperRenderer extends TileEntitySpecialRenderer<TileEntityPaper>
-{
-    @Override
-    public void render(TileEntityPaper te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
-    {
-        GlStateManager.pushMatrix();
-        {
-            GlStateManager.translate(x, y, z);
-            GlStateManager.translate(0.5, 0.5, 0.5);
-            IBlockState state = te.getWorld().getBlockState(te.getPos());
-            if(state.getBlock() != DeviceBlocks.PAPER) return;
-            GlStateManager.rotate(state.getValue(BlockPaper.FACING).getHorizontalIndex() * -90F + 180F, 0, 1, 0);
-            GlStateManager.rotate(-te.getRotation(), 0, 0, 1);
-            GlStateManager.translate(-0.5, -0.5, -0.5);
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 
-            IPrint print = te.getPrint();
-            if(print != null)
-            {
-                NBTTagCompound data = print.toTag();
-                if(data.hasKey("pixels", Constants.NBT.TAG_INT_ARRAY) && data.hasKey("resolution", Constants.NBT.TAG_INT))
-                {
-                    Minecraft.getMinecraft().getTextureManager().bindTexture(PrinterRenderer.ModelPaper.TEXTURE);
-                    if(DeviceConfig.isRenderPrinted3D() && !data.getBoolean("cut"))
-                    {
+/**
+ * @author MrCrayfish
+ */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class PaperRenderer extends TileEntityRenderer<PaperTileEntity> {
+    public PaperRenderer(TileEntityRendererDispatcher rendererDispatcherIn) {
+        super(rendererDispatcherIn);
+    }
+
+    @SuppressWarnings("UnusedLabel")
+    @Override
+    public void render(PaperTileEntity tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        matrixStackIn.push();
+        mainMatrix: {
+            // Translate to the tile entity's position. Then translate forwards a half by all 3 coordinates.
+            matrixStackIn.translate(tileEntityIn.getPos().getX(), tileEntityIn.getPos().getY(), tileEntityIn.getPos().getZ());
+            matrixStackIn.translate(0.5f, 0.5f, 0.5f);
+
+            // Get block state of the paper tile entity.
+            BlockState state = Objects.requireNonNull(tileEntityIn.getWorld()).getBlockState(tileEntityIn.getPos());
+
+            // Check if the block of the tile entity is the paper block.
+            if (state.getBlock() != DeviceBlocks.PAPER.get()) {
+                // The block isn't a paper block, because of that we will return and don't go any further.
+                break mainMatrix;
+            }
+
+            // Rotate from the tile entity's rotation.
+            matrixStackIn.rotate(new Quaternion(state.get(PaperBlock.HORIZONTAL_FACING).getHorizontalIndex() * -90F + 180F, 0, 1, 0));
+            matrixStackIn.rotate(new Quaternion(-tileEntityIn.getRotation(), 0f, 0f, 1f));
+
+            // Translate backwards a half by all 3 coordinates.
+            matrixStackIn.translate(-0.5f, -0.5f, -0.5f);
+
+            // Get the print instance from the paper tile entity.
+            IPrint print = tileEntityIn.getPrint();
+
+            // Check if the print isn't null.
+            if (print != null) {
+                // Get the nbt tag from the print.
+                CompoundNBT data = print.toTag();
+
+                // Check if containing pixels.
+                if (data.contains("pixels", Constants.NBT.TAG_INT_ARRAY) && data.hasKey("resolution", Constants.NBT.TAG_INT)) {
+                    // Bind texture to the paper model texture.
+                    Minecraft.getInstance().getTextureManager().bindTexture(PrinterRenderer.ModelPaper.TEXTURE);
+
+                    // Check if the print was printed in 3D.
+                    if (DeviceConfig.isRenderPrinted3D() && !data.getBoolean("cut")) {
+                        // Draw a cuboid.
                         drawCuboid(0, 0, 0, 16, 16, 1);
                     }
 
-                    GlStateManager.translate(0, 0, DeviceConfig.isRenderPrinted3D() ? 0.0625 : 0.001);
+                    // ???
+                    matrixStackIn.translate(0f, 0f, DeviceConfig.isRenderPrinted3D() ? 0.0625f : 0.001f);
 
-                    GlStateManager.pushMatrix();
-                    {
+                    // Push matrix stack.
+                    matrixStackIn.push();
+                    printRender: {
                         IPrint.Renderer renderer = PrintingManager.getRenderer(print);
                         renderer.render(data);
                     }
+
                     GlStateManager.popMatrix();
 
-                    GlStateManager.pushMatrix();
-                    {
-                        if(DeviceConfig.isRenderPrinted3D() && data.getBoolean("cut"))
-                        {
-                            NBTTagCompound tag = print.toTag();
-                            drawPixels(tag.getIntArray("pixels"), tag.getInteger("resolution"), tag.getBoolean("cut"));
+                    matrixStackIn.push();
+                    printRender: {
+                        if (!DeviceConfig.isRenderPrinted3D() || !data.getBoolean("cut")) {
+                            break printRender;
                         }
+                        CompoundNBT tag = print.toTag();
+                        drawPixels(tag.getIntArray("pixels"), tag.getInteger("resolution"), tag.getBoolean("cut"));
                     }
-                    GlStateManager.popMatrix();
+                    matrixStackIn.pop();
                 }
             }
         }
-        GlStateManager.popMatrix();
+        matrixStackIn.pop();
+    }
+
+    @Override
+    public void render(PaperTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+    {
     }
 
     private static void drawCuboid(double x, double y, double z, double width, double height, double depth)
@@ -83,16 +126,16 @@ public class PaperRenderer extends TileEntitySpecialRenderer<TileEntityPaper>
         GlStateManager.disableLighting();
         GlStateManager.enableRescaleNormal();
         GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
-        drawQuad(x + (1 - width), y, z, x + width + (1 - width), y + height, z, EnumFacing.NORTH);
-        drawQuad(x + 1, y, z, x + 1, y + height, z + depth, EnumFacing.EAST);
-        drawQuad(x + width + 1 - (width + width), y, z + depth, x + width + 1 - (width + width), y + height, z, EnumFacing.WEST);
-        drawQuad(x + (1 - width), y, z + depth, x + width + (1 - width), y, z, EnumFacing.DOWN);
-        drawQuad(x + (1 - width), y + height, z, x + width + (1 - width), y, z + depth, EnumFacing.UP);
+        drawQuad(x + (1 - width), y, z, x + width + (1 - width), y + height, z, Direction.NORTH);
+        drawQuad(x + 1, y, z, x + 1, y + height, z + depth, Direction.EAST);
+        drawQuad(x + width + 1 - (width + width), y, z + depth, x + width + 1 - (width + width), y + height, z, Direction.WEST);
+        drawQuad(x + (1 - width), y, z + depth, x + width + (1 - width), y, z, Direction.DOWN);
+        drawQuad(x + (1 - width), y + height, z, x + width + (1 - width), y, z + depth, Direction.UP);
         GlStateManager.disableRescaleNormal();
         GlStateManager.enableLighting();
     }
 
-    private static void drawQuad(double xFrom, double yFrom, double zFrom, double xTo, double yTo, double zTo, EnumFacing facing)
+    private static void drawQuad(double xFrom, double yFrom, double zFrom, double xTo, double yTo, double zTo, Direction facing)
     {
         double textureWidth = Math.abs(xTo - xFrom);
         double textureHeight = Math.abs(yTo - yFrom);

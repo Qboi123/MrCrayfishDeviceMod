@@ -10,7 +10,7 @@ import com.mrcrayfish.device.object.AppInfo;
 import com.mrcrayfish.device.util.GLHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
@@ -105,7 +105,7 @@ public abstract class Application extends Wrappable
 	 * your application window.
 	 */
 	@Override
-	public abstract void init(@Nullable NBTTagCompound intent);
+	public abstract void init(@Nullable CompoundNBT intent);
 
     @Override
     public void onTick()
@@ -251,12 +251,12 @@ public abstract class Application extends Wrappable
     /**
      * Called when you first load up your application. Allows you to read any
      * stored data you have saved. Only called if you have saved data. This
-     * method is called after {{@link Wrappable#init(NBTTagCompound)} so you can update any
+     * method is called after {{@link Wrappable#init(CompoundNBT)} so you can update any
      * Components with this data.
      *
      * @param tagCompound the tag compound where you saved data is
      */
-    public abstract void load(NBTTagCompound tagCompound);
+    public abstract void load(CompoundNBT tagCompound);
 
     /**
      * Allows you to save data from your application. This is only called if
@@ -265,7 +265,7 @@ public abstract class Application extends Wrappable
      *
      * @param tagCompound the tag compound to save your data to
      */
-    public abstract void save(NBTTagCompound tagCompound);
+    public abstract void save(CompoundNBT tagCompound);
 
     /**
      * Sets the defaults layout width. It should be noted that the width must be

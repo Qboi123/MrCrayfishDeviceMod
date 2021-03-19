@@ -18,7 +18,7 @@ import com.mrcrayfish.device.programs.system.object.ColorScheme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -45,7 +45,7 @@ public class ApplicationSettings extends SystemApplication
 	private Stack<Layout> predecessor = new Stack<>();
 
 	@Override
-	public void init(@Nullable NBTTagCompound intent)
+	public void init(@Nullable CompoundNBT intent)
 	{
 		buttonPrevious = new Button(2, 2, Icons.ARROW_LEFT);
 		buttonPrevious.setVisible(false);
@@ -199,13 +199,13 @@ public class ApplicationSettings extends SystemApplication
 	}
 
 	@Override
-	public void load(NBTTagCompound tagCompound)
+	public void load(CompoundNBT tagCompound)
 	{
 
 	}
 
 	@Override
-	public void save(NBTTagCompound tagCompound)
+	public void save(CompoundNBT tagCompound)
 	{
 
 	}

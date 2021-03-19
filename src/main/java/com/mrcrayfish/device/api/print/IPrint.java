@@ -2,7 +2,7 @@ package com.mrcrayfish.device.api.print;
 
 import com.mrcrayfish.device.init.DeviceBlocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 //printing somethings takes makes ink cartridge take damage. cartridge can only stack to one
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public interface IPrint
 {
@@ -33,23 +33,23 @@ public interface IPrint
      * Converts print into an NBT tag compound. Used for the renderer.
      * @return nbt form of print
      */
-    NBTTagCompound toTag();
+    CompoundNBT toTag();
 
-    void fromTag(NBTTagCompound tag);
+    void fromTag(CompoundNBT tag);
 
     @SideOnly(Side.CLIENT)
     Class<? extends Renderer> getRenderer();
 
-    static NBTTagCompound writeToTag(IPrint print)
+    static CompoundNBT writeToTag(IPrint print)
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setString("type", PrintingManager.getPrintIdentifier(print));
         tag.setTag("data", print.toTag());
         return tag;
     }
 
     @Nullable
-    static IPrint loadFromTag(NBTTagCompound tag)
+    static IPrint loadFromTag(CompoundNBT tag)
     {
         IPrint print = PrintingManager.getPrint(tag.getString("type"));
         if(print != null)
@@ -62,10 +62,10 @@ public interface IPrint
 
     static ItemStack generateItem(IPrint print)
     {
-        NBTTagCompound blockEntityTag = new NBTTagCompound();
+        CompoundNBT blockEntityTag = new CompoundNBT();
         blockEntityTag.setTag("print", writeToTag(print));
 
-        NBTTagCompound itemTag = new NBTTagCompound();
+        CompoundNBT itemTag = new CompoundNBT();
         itemTag.setTag("BlockEntityTag", blockEntityTag);
 
         ItemStack stack = new ItemStack(DeviceBlocks.PAPER);
@@ -80,6 +80,6 @@ public interface IPrint
 
     interface Renderer
     {
-        boolean render(NBTTagCompound data);
+        boolean render(CompoundNBT data);
     }
 }

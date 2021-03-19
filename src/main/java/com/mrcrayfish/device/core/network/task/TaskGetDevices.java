@@ -3,9 +3,9 @@ package com.mrcrayfish.device.core.network.task;
 import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.core.network.NetworkDevice;
 import com.mrcrayfish.device.core.network.Router;
-import com.mrcrayfish.device.tileentity.TileEntityNetworkDevice;
+import com.mrcrayfish.device.tileentity.NetworkDeviceTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,12 +14,12 @@ import net.minecraft.world.World;
 import java.util.Collection;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskGetDevices extends Task
 {
     private BlockPos devicePos;
-    private Class<? extends TileEntityNetworkDevice> targetDeviceClass;
+    private Class<? extends NetworkDeviceTileEntity> targetDeviceClass;
 
     private Collection<NetworkDevice> foundDevices;
 
@@ -34,7 +34,7 @@ public class TaskGetDevices extends Task
         this.devicePos = devicePos;
     }
 
-    public TaskGetDevices(BlockPos devicePos, Class<? extends TileEntityNetworkDevice> targetDeviceClass)
+    public TaskGetDevices(BlockPos devicePos, Class<? extends NetworkDeviceTileEntity> targetDeviceClass)
     {
         this();
         this.devicePos = devicePos;
@@ -42,7 +42,7 @@ public class TaskGetDevices extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setLong("devicePos", devicePos.toLong());
         if(targetDeviceClass != null)
@@ -52,14 +52,14 @@ public class TaskGetDevices extends Task
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         BlockPos devicePos = BlockPos.fromLong(nbt.getLong("devicePos"));
         Class targetDeviceClass = null;
         try
         {
             Class targetClass = Class.forName(nbt.getString("targetClass"));
-            if(TileEntityNetworkDevice.class.isAssignableFrom(targetClass))
+            if(NetworkDeviceTileEntity.class.isAssignableFrom(targetClass))
             {
                 targetDeviceClass = targetClass;
             }
@@ -70,9 +70,9 @@ public class TaskGetDevices extends Task
         }
 
         TileEntity tileEntity = world.getTileEntity(devicePos);
-        if(tileEntity instanceof TileEntityNetworkDevice)
+        if(tileEntity instanceof NetworkDeviceTileEntity)
         {
-            TileEntityNetworkDevice tileEntityNetworkDevice = (TileEntityNetworkDevice) tileEntity;
+            NetworkDeviceTileEntity tileEntityNetworkDevice = (NetworkDeviceTileEntity) tileEntity;
             if(tileEntityNetworkDevice.isConnected())
             {
                 Router router = tileEntityNetworkDevice.getRouter();
@@ -93,7 +93,7 @@ public class TaskGetDevices extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
         if(this.isSucessful())
         {
@@ -104,7 +104,7 @@ public class TaskGetDevices extends Task
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
 
     }

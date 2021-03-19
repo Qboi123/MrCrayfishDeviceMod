@@ -4,7 +4,7 @@ import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.programs.email.object.Email;
 import com.mrcrayfish.device.programs.email.EmailManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -25,13 +25,13 @@ public class TaskViewEmail extends Task
 	}
 	
 	@Override
-	public void prepareRequest(NBTTagCompound nbt) 
+	public void prepareRequest(CompoundNBT nbt) 
 	{
 		nbt.setInteger("Index", this.index);
 	}
 
 	@Override
-	public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player) 
+	public void processRequest(CompoundNBT nbt, World world, EntityPlayer player) 
 	{
 		List<Email> emails = EmailManager.INSTANCE.getEmailsForAccount(player);
 		if(emails != null)
@@ -45,9 +45,9 @@ public class TaskViewEmail extends Task
 	}
 
 	@Override
-	public void prepareResponse(NBTTagCompound nbt) {}
+	public void prepareResponse(CompoundNBT nbt) {}
 
 	@Override
-	public void processResponse(NBTTagCompound nbt) {}
+	public void processResponse(CompoundNBT nbt) {}
 	
 }

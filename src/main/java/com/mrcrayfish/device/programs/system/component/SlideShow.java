@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class SlideShow extends Component
 {

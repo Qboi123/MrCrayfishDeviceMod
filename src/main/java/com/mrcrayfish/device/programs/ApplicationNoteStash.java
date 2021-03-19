@@ -6,7 +6,7 @@ import com.mrcrayfish.device.api.app.Layout;
 import com.mrcrayfish.device.api.app.component.*;
 import com.mrcrayfish.device.api.io.File;
 import com.mrcrayfish.device.core.io.FileSystem;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
@@ -44,7 +44,7 @@ public class ApplicationNoteStash extends Application
 	}
 
 	@Override
-	public void init(@Nullable NBTTagCompound intent)
+	public void init(@Nullable CompoundNBT intent)
 	{
 		/* Main */
 		
@@ -149,7 +149,7 @@ public class ApplicationNoteStash extends Application
 		btnSave.setSize(50, 20);
 		btnSave.setClickListener((mouseX, mouseY, mouseButton) ->
 		{
-            NBTTagCompound data = new NBTTagCompound();
+            CompoundNBT data = new CompoundNBT();
             data.setString("title", title.getText());
             data.setString("content", textArea.getText());
 
@@ -196,10 +196,10 @@ public class ApplicationNoteStash extends Application
 	}
 
 	@Override
-	public void load(NBTTagCompound tagCompound) {}
+	public void load(CompoundNBT tagCompound) {}
 
 	@Override
-	public void save(NBTTagCompound tagCompound) {}
+	public void save(CompoundNBT tagCompound) {}
 
 	@Override
 	public void onClose()
@@ -214,7 +214,7 @@ public class ApplicationNoteStash extends Application
 		if(!PREDICATE_FILE_NOTE.test(file))
 			return false;
 
-		NBTTagCompound data = file.getData();
+		CompoundNBT data = file.getData();
 		noteTitle.setText(data.getString("title"));
 		noteContent.setText(data.getString("content"));
 		setCurrentLayout(layoutViewNote);

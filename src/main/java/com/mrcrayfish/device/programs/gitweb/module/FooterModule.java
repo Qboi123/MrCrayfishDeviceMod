@@ -12,7 +12,7 @@ import java.awt.Color;
 import java.util.Map;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class FooterModule extends Module
 {

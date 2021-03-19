@@ -7,12 +7,12 @@ import net.minecraft.client.gui.toasts.GuiToast;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ClientNotification implements IToast
 {
@@ -47,7 +47,7 @@ public class ClientNotification implements IToast
         return delta >= 5000L ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
     }
 
-    public static ClientNotification loadFromTag(NBTTagCompound tag)
+    public static ClientNotification loadFromTag(CompoundNBT tag)
     {
         ClientNotification notification = new ClientNotification();
 
@@ -56,7 +56,7 @@ public class ClientNotification implements IToast
 
         try
         {
-            notification.icon = (IIcon)Class.forName(className).getEnumConstants()[ordinal];
+            notification.icon = (IIcon)Class.forName(className).getConstants()[ordinal];
         }
         catch (ClassNotFoundException e)
         {

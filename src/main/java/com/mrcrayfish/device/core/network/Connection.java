@@ -1,8 +1,8 @@
 package com.mrcrayfish.device.core.network;
 
-import com.mrcrayfish.device.tileentity.TileEntityNetworkDevice;
-import com.mrcrayfish.device.tileentity.TileEntityRouter;
-import net.minecraft.nbt.NBTTagCompound;
+import com.mrcrayfish.device.tileentity.NetworkDeviceTileEntity;
+import com.mrcrayfish.device.tileentity.RouterTileEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class Connection
 {
@@ -49,9 +49,9 @@ public class Connection
             return null;
 
         TileEntity tileEntity = world.getTileEntity(routerPos);
-        if(tileEntity instanceof TileEntityRouter)
+        if(tileEntity instanceof RouterTileEntity)
         {
-            TileEntityRouter router = (TileEntityRouter) tileEntity;
+            RouterTileEntity router = (RouterTileEntity) tileEntity;
             if(router.getRouter().getId().equals(routerId))
             {
                 return router.getRouter();
@@ -65,14 +65,14 @@ public class Connection
         return routerPos != null;
     }
 
-    public NBTTagCompound toTag()
+    public CompoundNBT toTag()
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundNBT tag = new CompoundNBT();
         tag.setString("id", routerId.toString());
         return tag;
     }
 
-    public static Connection fromTag(TileEntityNetworkDevice device, NBTTagCompound tag)
+    public static Connection fromTag(NetworkDeviceTileEntity device, CompoundNBT tag)
     {
         Connection connection = new Connection();
         connection.routerId = UUID.fromString(tag.getString("id"));

@@ -5,7 +5,7 @@ import com.mrcrayfish.device.api.app.Notification;
 import com.mrcrayfish.device.api.task.Task;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskNotificationTest extends Task
 {
@@ -23,13 +23,13 @@ public class TaskNotificationTest extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
 
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         Notification notification = new Notification(Icons.MAIL, "New Email!", "Check your inbox");
         notification.pushTo((EntityPlayerMP) player);
@@ -40,13 +40,13 @@ public class TaskNotificationTest extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
 
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
 
     }

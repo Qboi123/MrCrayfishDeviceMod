@@ -18,7 +18,7 @@ import java.util.List;
  * in your application to switch interfaces during runtime.
  * <p>
  * Use {@link com.mrcrayfish.device.api.app.Application#setCurrentLayout(Layout)} 
- * inside of {@link Wrappable#init(net.minecraft.nbt.NBTTagCompound)}
+ * inside of {@link Wrappable#init(net.minecraft.nbt.CompoundNBT)}
  * to set the current layout for your application.
  * <p>
  * Check out the example applications to get a better understand of

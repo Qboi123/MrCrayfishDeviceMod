@@ -8,7 +8,7 @@ import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.core.io.action.FileAction;
 import com.mrcrayfish.device.core.io.task.TaskGetFiles;
 import com.mrcrayfish.device.programs.system.component.FileBrowser;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -431,7 +431,7 @@ public class Folder extends File
 	 * @param data the data to set
 	 */
 	@Override
-	public void setData(@Nonnull NBTTagCompound data) {}
+	public void setData(@Nonnull CompoundNBT data) {}
 
 	/**
 	 * Sets the data for this file. This does not work on folders and will fail silently. A callback
@@ -441,7 +441,7 @@ public class Folder extends File
 	 * @param callback the response callback
 	 */
 	@Override
-	public void setData(@Nonnull NBTTagCompound data, Callback<FileSystem.Response> callback)
+	public void setData(@Nonnull CompoundNBT data, Callback<FileSystem.Response> callback)
 	{
 		if(callback != null)
 		{
@@ -466,7 +466,7 @@ public class Folder extends File
 		files.removeIf(f -> !f.isFolder());
 		for(int i = 0; i < tagList.tagCount(); i++)
 		{
-			NBTTagCompound fileTag = tagList.getCompoundTagAt(i);
+			CompoundNBT fileTag = tagList.getCompoundTagAt(i);
 			File file = File.fromTag(fileTag.getString("file_name"), fileTag.getCompoundTag("data"));
 			file.drive = drive;
 			file.valid = true;
@@ -562,11 +562,11 @@ public class Folder extends File
 	 * @return the folder tag
 	 */
 	@Override
-	public NBTTagCompound toTag()
+	public CompoundNBT toTag()
 	{
-		NBTTagCompound folderTag = new NBTTagCompound();
+		CompoundNBT folderTag = new CompoundNBT();
 
-		NBTTagCompound fileList = new NBTTagCompound();
+		CompoundNBT fileList = new CompoundNBT();
 		files.stream().forEach(file -> fileList.setTag(file.getName(), file.toTag()));
 		folderTag.setTag("files", fileList);
 
@@ -582,17 +582,17 @@ public class Folder extends File
 	 * @param folderTag the tag compound from {@link #toTag()}
 	 * @return a folder instance
 	 */
-	public static Folder fromTag(String name, NBTTagCompound folderTag)
+	public static Folder fromTag(String name, CompoundNBT folderTag)
 	{
 		Folder folder = new Folder(name);
 
 		if(folderTag.hasKey("protected", Constants.NBT.TAG_BYTE))
 			folder.protect = folderTag.getBoolean("protected");
 
-		NBTTagCompound fileList = folderTag.getCompoundTag("files");
+		CompoundNBT fileList = folderTag.getCompoundTag("files");
 		for(String fileName : fileList.getKeySet())
 		{
-			NBTTagCompound fileTag = fileList.getCompoundTag(fileName);
+			CompoundNBT fileTag = fileList.getCompoundTag(fileName);
 			if(fileTag.hasKey("files"))
 			{
 				File file = Folder.fromTag(fileName, fileTag);

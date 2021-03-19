@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class LayoutSearchApps extends StandardLayout
 {

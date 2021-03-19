@@ -1,19 +1,19 @@
 package com.mrcrayfish.device.jei;
 
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.DyeColor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class LaptopRecipeMaker
 {
     public static List<LaptopRecipeWrapper> getLaptopRecipes()
     {
         List<LaptopRecipeWrapper> recipes = new ArrayList<LaptopRecipeWrapper>();
-        for(EnumDyeColor color : EnumDyeColor.values())
+        for(DyeColor color : DyeColor.values())
         {
             recipes.add(new LaptopRecipeWrapper(color));
         }

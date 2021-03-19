@@ -4,7 +4,7 @@ import com.mrcrayfish.device.MrCrayfishDeviceMod;
 import net.minecraft.item.Item;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ItemBasic extends Item
 {
@@ -12,6 +12,6 @@ public class ItemBasic extends Item
     {
         this.setUnlocalizedName(id);
         this.setRegistryName(id);
-        this.setCreativeTab(MrCrayfishDeviceMod.TAB_DEVICE);
+        this.setCreativeTab(MrCrayfishDeviceMod.ITEM_GROUP);
     }
 }

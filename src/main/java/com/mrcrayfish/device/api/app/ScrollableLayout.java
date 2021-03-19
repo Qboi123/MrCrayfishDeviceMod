@@ -12,7 +12,7 @@ import net.minecraft.util.math.MathHelper;
 import java.awt.*;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class ScrollableLayout extends Layout
 {

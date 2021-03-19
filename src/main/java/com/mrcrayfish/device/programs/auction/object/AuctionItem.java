@@ -1,7 +1,7 @@
 package com.mrcrayfish.device.programs.auction.object;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.util.UUID;
 
@@ -74,10 +74,10 @@ public class AuctionItem
 		this.timeLeft = 0;
 	}
 	
-	public void writeToNBT(NBTTagCompound tag)
+	public void writeToNBT(CompoundNBT tag)
 	{
 		tag.setString("id", id.toString());
-		NBTTagCompound item = new NBTTagCompound();
+		CompoundNBT item = new CompoundNBT();
 		stack.writeToNBT(item);
 		tag.setTag("item", item);
 		tag.setInteger("price", price);
@@ -85,10 +85,10 @@ public class AuctionItem
 		tag.setString("seller", sellerId.toString());
 	}
 	
-	public static AuctionItem readFromNBT(NBTTagCompound tag)
+	public static AuctionItem readFromNBT(CompoundNBT tag)
 	{
 		UUID id = UUID.fromString(tag.getString("id"));
-		NBTTagCompound item = tag.getCompoundTag("item");
+		CompoundNBT item = tag.getCompoundTag("item");
 		ItemStack stack = new ItemStack(item);
 		int price = tag.getInteger("price");
 		long timeLeft = tag.getLong("time");

@@ -14,7 +14,7 @@ import net.minecraft.util.text.TextFormatting;
 import java.util.Map;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public abstract class ContainerModule extends Module
 {

@@ -3,9 +3,9 @@ package com.mrcrayfish.device.core.io.task;
 import com.mrcrayfish.device.api.task.Task;
 import com.mrcrayfish.device.core.io.FileSystem;
 import com.mrcrayfish.device.core.io.drive.AbstractDrive;
-import com.mrcrayfish.device.tileentity.TileEntityLaptop;
+import com.mrcrayfish.device.tileentity.LaptopTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Author: MrCrayfish
+ * @author MrCrayfish
  */
 public class TaskSetupFileBrowser extends Task
 {
@@ -38,19 +38,19 @@ public class TaskSetupFileBrowser extends Task
     }
 
     @Override
-    public void prepareRequest(NBTTagCompound nbt)
+    public void prepareRequest(CompoundNBT nbt)
     {
         nbt.setLong("pos", pos.toLong());
         nbt.setBoolean("include_main", includeMain);
     }
 
     @Override
-    public void processRequest(NBTTagCompound nbt, World world, EntityPlayer player)
+    public void processRequest(CompoundNBT nbt, World world, EntityPlayer player)
     {
         TileEntity tileEntity = world.getTileEntity(BlockPos.fromLong(nbt.getLong("pos")));
-        if(tileEntity instanceof TileEntityLaptop)
+        if(tileEntity instanceof LaptopTileEntity)
         {
-            TileEntityLaptop laptop = (TileEntityLaptop) tileEntity;
+            LaptopTileEntity laptop = (LaptopTileEntity) tileEntity;
             FileSystem fileSystem = laptop.getFileSystem();
             if(nbt.getBoolean("include_main"))
             {
@@ -62,13 +62,13 @@ public class TaskSetupFileBrowser extends Task
     }
 
     @Override
-    public void prepareResponse(NBTTagCompound nbt)
+    public void prepareResponse(CompoundNBT nbt)
     {
         if(this.isSucessful())
         {
             if(mainDrive != null)
             {
-                NBTTagCompound mainDriveTag = new NBTTagCompound();
+                CompoundNBT mainDriveTag = new CompoundNBT();
                 mainDriveTag.setString("name", mainDrive.getName());
                 mainDriveTag.setString("uuid", mainDrive.getUUID().toString());
                 mainDriveTag.setString("type", mainDrive.getType().toString());
@@ -78,7 +78,7 @@ public class TaskSetupFileBrowser extends Task
 
             NBTTagList driveList = new NBTTagList();
             availableDrives.forEach((k, v) -> {
-                NBTTagCompound driveTag = new NBTTagCompound();
+                CompoundNBT driveTag = new CompoundNBT();
                 driveTag.setString("name", v.getName());
                 driveTag.setString("uuid", v.getUUID().toString());
                 driveTag.setString("type", v.getType().toString());
@@ -89,7 +89,7 @@ public class TaskSetupFileBrowser extends Task
     }
 
     @Override
-    public void processResponse(NBTTagCompound nbt)
+    public void processResponse(CompoundNBT nbt)
     {
 
     }
